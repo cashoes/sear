@@ -1,13 +1,20 @@
 # History files
 .Rhistory
 .Rapp.history
+.Rprofile
 
 # Example code in package build process
 *-Ex.R
 
 # RStudio files
 .Rproj.user/
+.Rproj.user
+*.Rproj
 
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+
+# Packrat
+packrat/lib*/
+packrat/
