@@ -1,30 +1,31 @@
-#' Get a glimpse of your data.
+#' Simple enrichment analysis in R using the MSigDB collections.
 #'
 #' Carry out enrichment analysis against some or all of the MSigDB collections
 #' (1), Blood Transcriptome geness (2) and Tissue Enrichment Sets (3).
 #'
-#' A list of genes is compared to each annotated gene set in turn and a
-#' hypergeometric test of the overlap is performed. The size of the input gene
-#' list, gene set, intersection and resulting p-value are returned. P-values can
-#' be adjusted over each collection (optimistic) or globally (pessimistic),
-#' using any of the methods available to `p/adjust()`.
+#' A list of genes is compared to each annotated gene set in turn by performing
+#' a hypergeometric test of the overlap. The size of the input gene list, gene
+#' set, intersection and resulting p-value are returned. P-values can be
+#' adjusted over each collection (optimistic) or globally (pessimistic), using
+#' any of the methods available to `p/adjust()`.
 #'
-#' @param genes A character vector of HUGO gene naming commitee (HGNC) gene symbols.
-#' @param references A data.frame of annotated gene sets: defaults to a prepared
+#' @param genes A character vector of HUGO gene naming commitee (HGNC) gene
+#'   symbols.
+#' @param tbl_genesets A data.frame of annotated gene sets: defaults to a prepared
 #'   aggregate of the collections described above.
 #' @export
 #' @examples
-#' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), references)
-sear <- function(genes, references) {
-  references %>%
-    rowwise() %>%
-    mutate(n_genes = length(genes),
+#' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), tbl_genesets)
+sear <- function(genes, tbl_genesets) {
+  tbl_genesets %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(n_genes = length(genes),
            n_geneset = length(members),
            intersect = length(intersect(genes, members)),
            p_value = 1 - phyper(intersect - 1,
                                 n_genes,
                                 UNIVERSE_MRNA - n_genes,
                                 n_geneset)) %>%
-    ungroup() %>%
-    select(-members)
+    dplyr::ungroup() %>%
+    dplyr::select(-members)
 }
