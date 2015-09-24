@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), genesets)
-sear <- function(genes, genesets = genesets) {
+sear <- function(genes) {
   genesets %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
