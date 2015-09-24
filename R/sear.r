@@ -29,3 +29,6 @@ sear <- function(genes, genesets = genesets) {
     dplyr::ungroup() %>%
     dplyr::select(-members)
 }
+
+UNIVERSE_MRNA <- 45956
+UNIVERSE_MIRNA <- 1881
