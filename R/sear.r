@@ -30,5 +30,10 @@ sear <- function(genes) {
     dplyr::select(-members)
 }
 
+# constants - number of genes in universe
+# see: http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Web_site_v3.87_Release_Notes
 UNIVERSE_MRNA <- 45956
+
+# constant - number of mirs in universe
+# similar logic as above - total of all mirs in ensemble
 UNIVERSE_MIRNA <- 1881
