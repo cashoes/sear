@@ -1,7 +1,7 @@
 #' Get a glimpse of your data.
 #'
 #' Carry out enrichment analysis against some or all of the MSigDB collections
-#' (1), Blood Transcriptome Modules (2) and Tissue Enrichment Sets (3).
+#' (1), Blood Transcriptome geness (2) and Tissue Enrichment Sets (3).
 #'
 #' A list of genes is compared to each annotated gene set in turn and a
 #' hypergeometric test of the overlap is performed. The size of the input gene
@@ -15,15 +15,15 @@
 #' @export
 #' @examples
 #' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), references)
-sear <- function(module, references) {
+sear <- function(genes, references) {
   references %>%
     rowwise() %>%
-    mutate(n_module = length(module),
+    mutate(n_genes = length(genes),
            n_geneset = length(members),
-           intersect = length(intersect(module, members)),
+           intersect = length(intersect(genes, members)),
            p_value = 1 - phyper(intersect - 1,
-                                n_module,
-                                UNIVERSE_MRNA - n_module,
+                                n_genes,
+                                UNIVERSE_MRNA - n_genes,
                                 n_geneset)) %>%
     ungroup() %>%
     select(-members)
