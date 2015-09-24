@@ -18,3 +18,4 @@ Depends: R (>= 3.2.1)
 License: MIT
 LazyData: true
 Imports: dplyr (>= 0.4.3)
+Suggests: testthat
