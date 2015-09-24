@@ -11,13 +11,13 @@
 #'
 #' @param genes A character vector of HUGO gene naming commitee (HGNC) gene
 #'   symbols.
-#' @param tbl_genesets A data.frame of annotated gene sets: defaults to a prepared
+#' @param genesets A data.frame of annotated gene sets: defaults to a prepared
 #'   aggregate of the collections described above.
 #' @export
 #' @examples
-#' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), tbl_genesets)
-sear <- function(genes, tbl_genesets) {
-  tbl_genesets %>%
+#' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), genesets)
+sear <- function(genes, genesets = genesets) {
+  genesets %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
            n_geneset = length(members),
