@@ -15,7 +15,7 @@
 #'   aggregate of the collections described above.
 #' @export
 #' @examples
-#' sear(c("ACTB", "B2M", "SDHA", "LTBR", "HBB"), genesets)
+#' sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
 sear <- function(genes) {
   genesets %>%
     dplyr::rowwise() %>%
