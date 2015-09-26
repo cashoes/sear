@@ -4,7 +4,7 @@
 \alias{sear}
 \title{Simple enrichment analysis in R using the MSigDB collections.}
 \usage{
-sear(genes)
+sear(genes, type = c("mrna", "mirna"))
 }
 \arguments{
 \item{genes}{A character vector of HUGO gene naming commitee (HGNC) gene
