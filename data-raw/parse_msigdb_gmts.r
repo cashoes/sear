@@ -86,12 +86,7 @@ getmirs <- function(geneset, mirs_annot) {
     unique()
 }
 
-# getmirs(references$BTM$`targets of FOSL1/2 (M0)`, mirs_annot = mirs_annot)
+# caution, slow
 genesets_mirs <- genesets %>%
   dplyr::rowwise() %>%
   dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
-
-
-rapply(references_sub[c(1,2,4,5,6)], how = "replace",
-                                  function(geneset) getmirs(geneset, mirs_annot))
-
