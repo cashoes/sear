@@ -19,9 +19,11 @@
 sear <- function(genes, type = c("mrna", "mirna")) {
   type <- match.arg(type)
   tbl <- switch(type,
-         mrna = genesets,
-         mirna = genesets_mirs)
-
+                mrna = genesets,
+                mirna = genesets_mirs)
+  universe <- switch(type,
+                mrna = UNIVERSE_MRNA,
+                mirna = UNIVERSE_MIRNA)
   tbl %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
