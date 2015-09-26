@@ -16,8 +16,13 @@
 #' @export
 #' @examples
 #' sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
-sear <- function(genes) {
-  genesets %>%
+sear <- function(genes, type = c("mrna", "mirna")) {
+  type <- match.arg(type)
+  tbl <- switch(type,
+         mrna = genesets,
+         mirna = genesets_mirs)
+
+  tbl %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
            n_geneset = length(members),
