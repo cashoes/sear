@@ -70,18 +70,16 @@ genesets <- rbind(tbl_genesets, tissues)
 # creat mirna version of genesets
 # we'll use MSigDB C3 miRNA targets
 # only mir target gene sets
-mirs_annot <- genesets$C3_motif
-indeces <- names(mirs_annot) %>%
-  grep("^[ATGC]{7},.+", x = .)
-mirs_annot <- mirs_annot[indeces]
+mirs_annot <- genesets %>%
+  filter(collection == "C3_motif", subcollection == "MIR")
 
 getmirs <- function(geneset, mirs_annot) {
-  if(length(geneset) > 2000){
+  if (length(geneset) > 2000) {
     query <- paste(sample(geneset, 2000), collapse = "|")
   } else {
     query <- paste(geneset, collapse = "|")
   }
-  names(mirs_annot)[grep(query, mirs_annot)] %>%
+  mirs_annot$geneset[grep(query, mirs_annot$members)] %>%
     gsub("^[ATGC]{7},(.+)", "\\1", .) %>%
     strsplit(",") %>%
     unlist() %>%
@@ -89,6 +87,11 @@ getmirs <- function(geneset, mirs_annot) {
 }
 
 # getmirs(references$BTM$`targets of FOSL1/2 (M0)`, mirs_annot = mirs_annot)
-references_sub_remapped <- rapply(references_sub[c(1,2,4,5,6)], how = "replace",
+genesets_mirs <- genesets %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
+
+
+rapply(references_sub[c(1,2,4,5,6)], how = "replace",
                                   function(geneset) getmirs(geneset, mirs_annot))
 
