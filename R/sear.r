@@ -21,18 +21,18 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   tbl <- switch(type,
                 mrna = genesets,
                 mirna = genesets_mirs)
-  universe <- switch(type,
-                mrna = UNIVERSE_MRNA,
-                mirna = UNIVERSE_MIRNA)
+  universe_size <- switch(type,
+                          mrna = UNIVERSE_MRNA,
+                          mirna = UNIVERSE_MIRNA)
   tbl %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
-           n_geneset = length(members),
-           intersect = length(intersect(genes, members)),
-           p_value = 1 - phyper(intersect - 1,
-                                n_genes,
-                                UNIVERSE_MRNA - n_genes,
-                                n_geneset)) %>%
+                  n_geneset = length(members),
+                  intersect = length(intersect(genes, members)),
+                  p_value = 1 - phyper(intersect - 1,
+                                       n_genes,
+                                       universe_size - n_genes,
+                                       n_geneset)) %>%
     dplyr::ungroup() %>%
     dplyr::select(-members) %>%
     dplyr::group_by(collection) %>%
