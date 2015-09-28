@@ -13,6 +13,7 @@
 #'   symbols.
 #' @param genesets A data.frame of annotated gene sets: defaults to a prepared
 #'   aggregate of the collections described above.
+#' @importFrom(magrittr,"%>%")
 #' @export
 #' @examples
 #' sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
