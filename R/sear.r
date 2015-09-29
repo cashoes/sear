@@ -25,6 +25,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   universe_size <- switch(type,
                           mrna = UNIVERSE_MRNA,
                           mirna = UNIVERSE_MIRNA)
+  print(sprintf("Using %d as size of the universe.", universe_size))
   tbl %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
