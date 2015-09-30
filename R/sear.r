@@ -49,4 +49,4 @@ UNIVERSE_MRNA <- 45956
 
 # constant - number of mirs in universe
 # similar logic as above - total of all mirs in ensemble
-UNIVERSE_MIRNA <- 1881
+UNIVERSE_MIRNA <- 300
