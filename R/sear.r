@@ -19,13 +19,14 @@
 #' sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
 sear <- function(genes, type = c("mrna", "mirna")) {
   type <- match.arg(type)
+
   tbl <- switch(type,
                 mrna = genesets,
                 mirna = genesets_mirs)
-  universe_size <- switch(type,
-                          mrna = UNIVERSE_MRNA,
-                          mirna = UNIVERSE_MIRNA)
-  print(sprintf("Using %d as size of the universe.", universe_size))
+  uni <- switch(type,
+                mrna = UNIVERSE_MRNA,
+                mirna = UNIVERSE_MIRNA)
+
   tbl %>%
     dplyr::rowwise() %>%
     dplyr::mutate(n_genes = length(genes),
@@ -33,7 +34,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                   intersect = length(intersect(genes, members)),
                   p_value = 1 - phyper(intersect - 1,
                                        n_genes,
-                                       universe_size - n_genes,
+                                       uni - n_genes,
                                        n_geneset)) %>%
     dplyr::ungroup() %>%
     dplyr::select(-members) %>%
