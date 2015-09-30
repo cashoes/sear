@@ -27,12 +27,16 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                 mrna = genesets$members %>% unlist() %>% unique(),
                 mirna = genesets_mirs$members %>% unlist() %>% unique())
 
+  # check type of input
+  if (sum(genes %in% uni)/length(genes) < 0.75)
+    stop(sprintf("You selected type = '%s', but many of your features are not recognized.", type))
+
+  # only keep valid symbols
+  genes <- genes[genes %in% uni]
+
   # check size of input
   if (length(unique(genes)) < 10)
-    warning("You submitted <10 genes. Results may not be meaningful with so few genes.")
-
-  # check type of input
-  if(all(genes %in% unique(genesets)))
+    warning("You submitted <10 valid symbols. Results may not be meaningful with so few genes.")
 
   tbl %>%
     dplyr::rowwise() %>%
