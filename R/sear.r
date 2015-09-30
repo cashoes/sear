@@ -24,8 +24,15 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                 mrna = genesets,
                 mirna = genesets_mirs)
   uni <- switch(type,
-                mrna = UNIVERSE_MRNA,
-                mirna = UNIVERSE_MIRNA)
+                mrna = genesets$members %>% unlist() %>% unique(),
+                mirna = genesets_mirs$members %>% unlist() %>% unique())
+
+  # check size of input
+  if (length(unique(genes)) < 10)
+    warning("You submitted <10 genes. Results may not be meaningful with so few genes.")
+
+  # check type of input
+  if(all(genes %in% unique(genesets)))
 
   tbl %>%
     dplyr::rowwise() %>%
@@ -34,7 +41,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                   intersect = length(intersect(genes, members)),
                   p_value = 1 - phyper(intersect - 1,
                                        n_genes,
-                                       uni - n_genes,
+                                       length(uni) - n_genes,
                                        n_geneset)) %>%
     dplyr::ungroup() %>%
     dplyr::select(-members) %>%
@@ -45,8 +52,8 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 
 # constants - number of genes in universe
 # see: http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Web_site_v3.87_Release_Notes
-UNIVERSE_MRNA <- 45956
+# UNIVERSE_MRNA <- 45956
 
 # constant - number of mirs in universe
 # similar logic as above - total of all mirs in ensemble
-UNIVERSE_MIRNA <- 300
+# UNIVERSE_MIRNA <- 290
