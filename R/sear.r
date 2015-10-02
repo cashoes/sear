@@ -11,8 +11,11 @@
 #'
 #' @param genes A character vector of HUGO gene naming commitee (HGNC) gene
 #'   symbols.
-#' @param genesets A data.frame of annotated gene sets: defaults to a prepared
-#'   aggregate of the collections described above.
+#' @param type A character string. The type of symbols in the input: 'mrna' for
+#'   gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
+#'   either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
+#'   from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
+#'   Acids Res. 43, 3490–3497.
 #' @importFrom magrittr "%>%"
 #' @export
 #' @examples
