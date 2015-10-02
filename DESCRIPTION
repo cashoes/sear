@@ -17,5 +17,6 @@ Description: A package for simple enrichment analysis using:
 Depends: R (>= 3.2.1)
 License: MIT
 LazyData: true
-Imports: dplyr (>= 0.4.3)
+Imports: dplyr (>= 0.4.3),
+    magrittr
 Suggests: testthat
