@@ -71,3 +71,6 @@ genesets <- rbind(tbl_genesets, tissues)
 
 # cleanup ' /// ' separators across all genesets
 genesets$members <- map(genesets$members, function(x) unlist(strsplit(x, split = ' /// ')))
+
+# finally, save object
+save(genesets, file = 'data/genesets.rda')
