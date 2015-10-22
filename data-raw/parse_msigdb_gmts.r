@@ -71,30 +71,6 @@ genesets <- rbind(tbl_genesets, tissues)
 genesets$members <- map(genesets$members, function(x) unlist(strsplit(x, split = ' /// ')))
 
 # creat mirna version of genesets
-# we'll use MSigDB C3 miRNA targets
-# only mir target gene sets
-mirs_annot <- genesets %>%
-  filter(collection == "C3_motif", subcollection == "MIR")
-
-getmirs <- function(geneset, mirs_annot) {
-  if (length(geneset) > 2000) {
-    query <- paste(sample(geneset, 2000), collapse = "|")
-  } else {
-    query <- paste(geneset, collapse = "|")
-  }
-  mirs_annot$geneset[grep(query, mirs_annot$members)] %>%
-    gsub("^[ATGC]{7},(.+)", "\\1", .) %>%
-    strsplit(",") %>%
-    unlist() %>%
-    unique()
-}
-
-# caution, slow
-genesets_mirs <- genesets %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
-
-# creat mirna version of genesets
 # using mirWalk2.0 data:
 # http://www.umm.uni-heidelberg.de/apps/zmf/mirwalk/holistic.html
 
