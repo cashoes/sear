@@ -67,6 +67,9 @@ tissues <- dplyr::select(tissues, collection, subcollection, geneset, members)
 # final object
 genesets <- rbind(tbl_genesets, tissues)
 
+# cleanup ' /// ' separators across all genesets
+genesets$members <- map(genesets$members, function(x) unlist(strsplit(x, split = ' /// ')))
+
 # creat mirna version of genesets
 # we'll use MSigDB C3 miRNA targets
 # only mir target gene sets
