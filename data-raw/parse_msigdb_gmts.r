@@ -1,4 +1,6 @@
-#' Source code for parsing MSigDB GMT files obtained from the Broad Institute.
+#' Code for parsing MSigDB GMT files obtained from the Broad Institute
+
+# creat gene symbol version of genesets ----------------------------------------
 files <- list.files(path = "data-raw/misgdb/", pattern = ".gmt$", full.names = T)
 names(files) <- c("BTM_ALL",
                   "C1_positional_ALL",
@@ -70,7 +72,7 @@ genesets <- rbind(tbl_genesets, tissues)
 # cleanup ' /// ' separators across all genesets
 genesets$members <- map(genesets$members, function(x) unlist(strsplit(x, split = ' /// ')))
 
-# creat mirna version of genesets
+# creat mirna version of genesets ----------------------------------------------
 # using mirWalk2.0 data:
 # http://www.umm.uni-heidelberg.de/apps/zmf/mirwalk/holistic.html
 
