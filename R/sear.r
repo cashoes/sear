@@ -1,7 +1,7 @@
 #' Simple enrichment analysis in R using the MSigDB collections.
 #'
 #' Carry out enrichment analysis against some or all of the MSigDB collections
-#' (1), Blood Transcriptome geness (2) and Tissue Enrichment Sets (3).
+#' (1), Blood Transcriptome genes (2) and Tissue Enrichment Sets (3).
 #'
 #' A list of genes is compared to each annotated gene set in turn by performing
 #' a hypergeometric test of the overlap. The size of the input gene list, gene
@@ -15,11 +15,13 @@
 #'   gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
 #'   either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
 #'   from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
-#'   Acids Res. 43, 3490–3497.
+#'   Acids Res. 43, 3490-3497.
 #' @importFrom magrittr "%>%"
 #' @export
 #' @examples
-#' sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
+#'
+#' input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
+#' sear(input, type = 'mirna')
 sear <- function(genes, type = c("mrna", "mirna")) {
   type <- match.arg(type)
 
