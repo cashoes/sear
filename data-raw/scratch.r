@@ -52,16 +52,8 @@ system.time({
     dplyr::filter(source != target) # remove self-references
 })
 
-# jac <- map2(foo[links$source + 1], foo[links$target + 1], jaccard)
-
-links <- links %>% dplyr::filter(source != target) # remove self-references
-
-library(RPushbullet)
-pbPost(type = 'note', title = 'Done!')
-save(nodes, links, file = 'data-raw/genesets_adjacency.rda')
-pbPost(type = 'note', title = 'Saved!')
-
 rm(foo)
+save(nodes, links, file = 'data-raw/genesets_adjacency.rda')
 
 # come up with a way to filter from the whole table of links and
 load('data-raw/genesets_adjacency.rda')
@@ -69,24 +61,36 @@ library(networkD3)
 
 # given a filtered nodes data.frames subset links and return numbered version
 # suitable for use with networkD3
-rebase <- function(nodes, links) {
-  # subset
-  index <- which(links$source %in% nodes$rowid & links$target %in% nodes$rowid)
-  links %>%
-    slice(index) %>%
-    mutate(source = rep(1:nrow(nodes), each = nrow(nodes)),
-           target = rep(1:nrow(nodes), nrow(nodes)))
+# rebase <- function(nodes, links) {
+#   # subset
+#   # index <- which(links$source %in% nodes$rowid & links$target %in% nodes$rowid)
+#   links %>%
+#     dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
+#     # dplyr::slice(index) %>%
+#     dplyr::mutate(source = rep(1:nrow(nodes), each = nrow(nodes)),
+#            target = rep(1:nrow(nodes), nrow(nodes)))
+# }
+
+rebase <- function(nodes) {
+  foo <- nodes$members
+  names(foo) <- 0:(nrow(nodes) - 1)
+
+  data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
+    dplyr::tbl_df(.) %>%
+    dplyr::rename(source = V1, target = V2) %>%
+    dplyr::mutate(jaccard  = unlist(map2(foo[source + 1], foo[target + 1], jaccard))) %>%
+    dplyr::filter(source != target) # remove self-references
 }
 
-nodes_small <- nodes %>% slice(50:61) #filter(collection == 'TISSUES')
-
-forceNetwork(Links = rebase(nodes_small, links_jaccard) %>% filter(jaccard > 0.25),
+nodes_small <- nodes %>% filter(collection == 'TISSUES')
+system.time(links_small <- rebase(nodes_small) %>% filter(jaccard > 0.15))
+forceNetwork(Links = links_small,
              Nodes = nodes_small,
-             NodeID = 'geneset', Group = 'subcollection',
+             NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
              Source = 'source', Target = 'target', Value = 'jaccard',
              fontSize = 10, fontFamily = 'sans', opacity = 0.75,
-             zoom = F, legend = T, bounded = T,
-             opacityNoHover = 1)
+             zoom = F, legend = T, bounded = F, opacityNoHover = 0,
+             charge = -120, linkDistance = 50)
 
 # # try ggnet2: omg so slow... -------------------------------------------------
 # # devtools::install_github("briatte/ggnet")
