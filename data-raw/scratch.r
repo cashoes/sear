@@ -46,6 +46,7 @@ names(foo) <- 0:(nrow(nodes) - 1)
 
 # Source = 'source', Target = 'target', Value = 'jaccard',
 
+# computes 0-1, 1-0 jaccard twice...
 # system.time({
 #   links <- data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
 #     dplyr::tbl_df(.) %>%
@@ -66,16 +67,6 @@ system.time({
     dplyr::mutate(jaccard  = unlist(map2(foo[source + 1], foo[target + 1], jaccard))) %>%
     dplyr::filter(source != target) # remove self-references
 })
-
-# system.time({
-#   dat1 <- data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
-#     dplyr::tbl_df(.) %>%
-#     dplyr::rename(source = V1, target = V2) %$%
-#     purrr::map2(source, target, c) %>%
-#     purrr::map(sort) %>%
-#     do.call(rbind.data.frame, .) %>%
-#     '['(!duplicated(.), )
-# })
 
 rm(foo)
 save(nodes, links, file = 'data-raw/genesets_adjacency.rda')
