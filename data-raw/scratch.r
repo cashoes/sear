@@ -35,18 +35,19 @@ data('genesets')
 # NodeID = 'geneset', Nodesize = 'size', Group = 'collection',
 nodes <- genesets %>%
   dplyr::add_rownames('rowid') %>%
-  dplyr::mutate(size = unlist(purrr::map(members, length))) %>%
+  dplyr::mutate(rowid = as.numeric(rowid) - 1,
+                size = unlist(purrr::map(members, length))) %>%
   dplyr::select(rowid, geneset, collection, subcollection, size, members)
 
 rm(genesets)
 
 # list for lookup - numbered version
 foo <- nodes$members
-names(foo) <- 0:(nrow(nodes) - 1)
+names(foo) <- nodes$rowid
 
 # Source = 'source', Target = 'target', Value = 'jaccard',
 
-# computes 0-1, 1-0 jaccard twice...
+# # computes 0-1, 1-0 jaccard twice...
 # system.time({
 #   links <- data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
 #     dplyr::tbl_df(.) %>%
@@ -58,7 +59,7 @@ names(foo) <- 0:(nrow(nodes) - 1)
 
 # this version gets rid of 0 -> 1, 1 -> 0 duplicates
 system.time({
-  links_2 <- t(combn(as.numeric(names(foo)), 2)) %>%
+  links <- t(combn(as.numeric(names(foo)), 2)) %>%
     as.data.frame(.) %>%
     dplyr::tbl_df(.) %>%
     dplyr::rename(source = V1, target = V2) %>%
@@ -77,29 +78,27 @@ library(networkD3)
 
 # given a filtered nodes data.frames subset links and return numbered version
 # suitable for use with networkD3
-# rebase <- function(nodes, links) {
-#   # subset
-#   # index <- which(links$source %in% nodes$rowid & links$target %in% nodes$rowid)
-#   links %>%
-#     dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
-#     # dplyr::slice(index) %>%
-#     dplyr::mutate(source = rep(1:nrow(nodes), each = nrow(nodes)),
-#            target = rep(1:nrow(nodes), nrow(nodes)))
-# }
 
-rebase <- function(nodes) {
-  foo <- nodes$members
-  names(foo) <- 0:(nrow(nodes) - 1)
-
-  data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
-    dplyr::tbl_df(.) %>%
-    dplyr::rename(source = V1, target = V2) %>%
-    dplyr::mutate(jaccard  = unlist(map2(foo[source + 1], foo[target + 1], jaccard))) %>%
-    dplyr::filter(source != target) # remove self-references
+rebase <- function(nodes, links) {
+  links %>%
+    dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
+    dplyr::mutate(source = match(source, nodes$rowid) - 1,
+                  target = match(target, nodes$rowid) - 1)
 }
 
-nodes_small <- nodes %>% filter(collection == 'TISSUES')
-system.time(links_small <- rebase(nodes_small) %>% filter(jaccard > 0.15))
+# rebase <- function(nodes) {
+#   foo <- nodes$members
+#   names(foo) <- 0:(nrow(nodes) - 1)
+#
+#   data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
+#     dplyr::tbl_df(.) %>%
+#     dplyr::rename(source = V1, target = V2) %>%
+#     dplyr::mutate(jaccard  = unlist(map2(foo[source + 1], foo[target + 1], jaccard))) %>%
+#     dplyr::filter(source != target) # remove self-references
+# }
+
+nodes_small <- nodes %>% filter(subcollection == 'BP')
+system.time(links_small <- rebase(nodes_small, links) %>% filter(jaccard > 0.15))
 forceNetwork(Links = links_small,
              Nodes = nodes_small,
              NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
