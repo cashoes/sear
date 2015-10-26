@@ -27,7 +27,6 @@ library(networkD3)
 library(purrr)
 library(tidyr)
 library(dplyr)
-library(magrittr)
 
 # prepare nodes and links data.frames for use by networkD3 ---------------------
 data('genesets')
@@ -72,13 +71,13 @@ system.time({
 rm(foo)
 save(nodes, links, file = 'data-raw/genesets_adjacency.rda')
 
-# come up with a way to filter from the whole table of links and
-load('data-raw/genesets_adjacency.rda')
+# filter from the whole table of links and given a subset of nodes -------------
 library(networkD3)
+
+system.time(load('data-raw/genesets_adjacency.rda'))
 
 # given a filtered nodes data.frames subset links and return numbered version
 # suitable for use with networkD3
-
 rebase <- function(nodes, links) {
   links %>%
     dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
@@ -86,26 +85,17 @@ rebase <- function(nodes, links) {
                   target = match(target, nodes$rowid) - 1)
 }
 
-# rebase <- function(nodes) {
-#   foo <- nodes$members
-#   names(foo) <- 0:(nrow(nodes) - 1)
-#
-#   data.table::CJ(as.numeric(names(foo)), as.numeric(names(foo))) %>%
-#     dplyr::tbl_df(.) %>%
-#     dplyr::rename(source = V1, target = V2) %>%
-#     dplyr::mutate(jaccard  = unlist(map2(foo[source + 1], foo[target + 1], jaccard))) %>%
-#     dplyr::filter(source != target) # remove self-references
-# }
-
-nodes_small <- nodes %>% filter(subcollection == 'BP')
-system.time(links_small <- rebase(nodes_small, links) %>% filter(jaccard > 0.15))
+nodes_small <- nodes %>% dplyr::filter(collection == 'TISSUES', subcollection != 'cns')
+# nodes_small <- nodes %>% dplyr::filter(geneset %in% readClipboard())
+system.time(links_small <- rebase(nodes_small, links) %>% filter(jaccard > 0.3))
 forceNetwork(Links = links_small,
              Nodes = nodes_small,
              NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
              Source = 'source', Target = 'target', Value = 'jaccard',
-             fontSize = 10, fontFamily = 'sans', opacity = 0.75,
-             zoom = F, legend = T, bounded = F, opacityNoHover = 0,
-             charge = -120, linkDistance = 50)
+             fontSize = 10, fontFamily = 'sans-serif', opacity = 0.75,
+             zoom = F, legend = T, bounded = F, opacityNoHover = 1,
+             charge = -300) %>%
+  saveNetwork(file = 'Blood_genesets_network.html')
 
 # # try ggnet2: omg so slow... -------------------------------------------------
 # # devtools::install_github("briatte/ggnet")
