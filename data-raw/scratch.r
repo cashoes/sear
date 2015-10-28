@@ -76,16 +76,26 @@ library(networkD3)
 
 system.time(load('data-raw/genesets_adjacency.rda'))
 
+process_nodes <- function(genesets) {
+  # add zero-indexed rowid column for networkD3
+  nodes <- nodes %>%
+    dplyr::add_rownames('rowid') %>%
+    dplyr::mutate(rowid = as.numeric(rowid) - 1,
+                  size = unlist(purrr::map(members, length))) %>%
+    dplyr::select(rowid, geneset, collection, subcollection, size, members)
+}
+
 # given a filtered nodes data.frames subset links and return numbered version
 # suitable for use with networkD3
-rebase <- function(nodes, links) {
+process_links <- function(nodes, links) {
+  # subset to edges in nodes tbl_df and create new zero-based index
   links %>%
     dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
     dplyr::mutate(source = match(source, nodes$rowid) - 1,
                   target = match(target, nodes$rowid) - 1)
 }
 
-nodes_small <- nodes %>% dplyr::filter(collection == 'TISSUES', subcollection != 'cns')
+nodes_small <- genesets %>% dplyr::filter(collection == 'TISSUES', subcollection != 'cns')
 # nodes_small <- nodes %>% dplyr::filter(geneset %in% readClipboard())
 system.time(links_small <- rebase(nodes_small, links) %>% filter(jaccard > 0.3))
 forceNetwork(Links = links_small,
