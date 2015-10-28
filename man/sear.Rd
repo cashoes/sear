@@ -14,11 +14,11 @@ symbols.}
 gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
 either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
 from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
-Acids Res. 43, 3490–3497.}
+Acids Res. 43, 3490-3497.}
 }
 \description{
 Carry out enrichment analysis against some or all of the MSigDB collections
-(1), Blood Transcriptome geness (2) and Tissue Enrichment Sets (3).
+(1), Blood Transcriptome genes (2) and Tissue Enrichment Sets (3).
 }
 \details{
 A list of genes is compared to each annotated gene set in turn by performing
@@ -28,6 +28,7 @@ adjusted over each collection (optimistic) or globally (pessimistic), using
 any of the methods available to `p/adjust()`.
 }
 \examples{
-sear(c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1"))
+input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
+sear(input, type = 'mrna')
 }
 
