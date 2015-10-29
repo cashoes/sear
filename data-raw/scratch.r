@@ -58,7 +58,7 @@ names(foo) <- nodes$rowid
 
 # this version gets rid of 0 -> 1, 1 -> 0 duplicates
 system.time({
-  links <- t(combn(as.numeric(names(foo)), 2)) %>%
+  genesets_links <- t(combn(as.numeric(names(foo)), 2)) %>%
     as.data.frame(.) %>%
     dplyr::tbl_df(.) %>%
     dplyr::rename(source = V1, target = V2) %>%
@@ -73,10 +73,12 @@ save(nodes, links, file = 'data-raw/genesets_adjacency.rda')
 
 # filter from the whole table of links and given a subset of nodes -------------
 library(networkD3)
+library(dplyr)
 
-system.time(load('data-raw/genesets_adjacency.rda'))
+system.time(load('data/genesets.rda'))
+system.time(load('data/genesets_links.rda'))
 
-process_nodes <- function(genesets) {
+process_nodes <- function(nodes) {
   # add zero-indexed rowid column for networkD3
   nodes <- nodes %>%
     dplyr::add_rownames('rowid') %>%
@@ -96,8 +98,10 @@ process_links <- function(nodes, links) {
 }
 
 nodes_small <- genesets %>% dplyr::filter(collection == 'TISSUES', subcollection != 'cns')
-# nodes_small <- nodes %>% dplyr::filter(geneset %in% readClipboard())
-system.time(links_small <- rebase(nodes_small, links) %>% filter(jaccard > 0.3))
+
+system.time(nodes_small <- process_nodes(nodes_small))
+system.time(links_small <- process_links(nodes_small, genesets_links) %>% filter(jaccard > 0.05))
+
 forceNetwork(Links = links_small,
              Nodes = nodes_small,
              NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
