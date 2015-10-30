@@ -33,7 +33,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                 mirna = genesets_mirs$members %>% unlist() %>% unique())
 
   # check type of input
-  if (sum(genes %in% uni)/length(genes) < 0.75)
+  if (sum(genes %in% uni)/length(genes) < 0.25)
     stop(sprintf("You selected type = '%s', but many of your features are not recognized.", type))
 
   # only keep valid symbols
