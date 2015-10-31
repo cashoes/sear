@@ -13,6 +13,3 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
-# Packrat
-packrat/lib*/
-packrat/
