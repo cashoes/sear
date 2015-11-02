@@ -21,10 +21,10 @@
 #'
 #' @format A data frame with 10786 rows and 4 variables:
 #' \itemize{
-#'   \item collection: origin of the gene set (MSigDB: H_hallmark, C1_position -
-#'   C7_immunologic collections, BTM or TISSUES)
+#'   \item collection: origin of the gene set (MSigDB: h_hallmark, c1_position -
+#'   c7_immunologic collections, btm or tissues)
 #'   \item subcollection: collections are sometimes further subdivided (e.g.
-#'   C2_canonical: CP_BIOCARTA, CP_KEGG, CP_PID, CP_REACTOME, etc.)
+#'   c2_canonical: cp_biocarta, cp_kegg, cp_pid, cp_reactome, etc.)
 #'   \item geneset: name of the gene set in the collection
 #'   \item members: gene members (using HUGO Gene Nomenclature Committee [HGNC]
 #'   gene symbols)
@@ -59,10 +59,10 @@
 #'
 #' @format A data frame with 10786 rows and 4 variables:
 #' \itemize{
-#'   \item collection: origin of the gene set (MSigDB: H_hallmark, C1_position -
-#'   C7_immunologic collections, BTM or TISSUES)
+#'   \item collection: origin of the gene set (MSigDB: h_hallmark, c1_position -
+#'   c7_immunologic collections, btm or tissues)
 #'   \item subcollection: collections are sometimes further subdivided (e.g.
-#'   C2_canonical: CP_BIOCARTA, CP_KEGG, CP_PID, CP_REACTOME, etc.)
+#'   c2_canonical: cp_biocarta, cp_kegg, cp_pid, cp_reactome, etc.)
 #'   \item geneset: name of the gene set in the collection
 #'   \item members: miRNA members (using naming convention used by mirBase; described:
 #'   Victor Ambros, Bonnie Bartel, David P. Bartel, Christopher B. Burge, James
