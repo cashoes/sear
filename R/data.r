@@ -80,9 +80,8 @@
 #'
 #' @format A data frame with 22,081,622 rows and 3 variables:
 #' \itemize{
-#'   \item source: ...
-#'   \item target: ...
-#'   \item jaccard: ...
-
+#'   \item source: zero-indexed row of first geneset of pair that was compared
+#'   \item target: zero-indexed row of second geneset of pair that was compared
+#'   \item jaccard: jaccard coefficient - \eqn{|A \cap B| / |A \cup B|}
 #' }
 "genesets_links"
