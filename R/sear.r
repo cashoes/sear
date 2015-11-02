@@ -44,7 +44,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
     warning("You submitted <10 valid symbols. Results may not be meaningful with so few genes.")
 
   tbl %>%
-    dplyr::rowwise() %>%
+    dplyr::rowwise(.) %>%
     dplyr::mutate(n_genes = length(genes),
                   n_geneset = length(members),
                   intersect = length(intersect(genes, members)),
@@ -52,11 +52,11 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                                        n_genes,
                                        length(uni) - n_genes,
                                        n_geneset)) %>%
-    dplyr::ungroup() %>%
+    dplyr::ungroup(.) %>%
     dplyr::select(-members) %>%
     dplyr::group_by(collection) %>%
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
-    dplyr::ungroup()
+    dplyr::ungroup(.)
 }
 
 # constants - number of genes in universe
