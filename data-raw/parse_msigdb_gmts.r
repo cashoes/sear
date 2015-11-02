@@ -72,5 +72,10 @@ genesets <- rbind(tbl_genesets, tissues)
 # cleanup ' /// ' separators across all genesets
 genesets$members <- map(genesets$members, function(x) unlist(strsplit(x, split = ' /// ')))
 
+# make naming consistent - lowercase throughout and no 'ALL' subcollections
+genesets$subcollection[genesets$subcollection == 'ALL'] <- genesets$collection[genesets$subcollection == 'ALL']
+genesets$collection <- genesets$collection %>% tolower()
+genesets$subcollection <- genesets$subcollection %>% tolower()
+
 # finally, save object
-save(genesets, file = 'data/genesets.rda')
+devtools::use_data(genesets, overwrite = T)
