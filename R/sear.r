@@ -59,10 +59,36 @@ sear <- function(genes, type = c("mrna", "mirna")) {
     dplyr::ungroup(.)
 }
 
-# constants - number of genes in universe
-# see: http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Web_site_v3.87_Release_Notes
-# UNIVERSE_MRNA <- 45956
+.process_nodes <- function(nodes) {
+  # add zero-indexed rowid column for networkD3
+  nodes <- nodes %>%
+    dplyr::add_rownames('rowid') %>%
+    dplyr::mutate(rowid = as.numeric(rowid) - 1,
+                  size = unlist(purrr::map(members, length))) %>%
+    dplyr::select(rowid, geneset, collection, subcollection, size, members)
+}
 
-# constant - number of mirs in universe
-# similar logic as above - total of all mirs in ensemble
-# UNIVERSE_MIRNA <- 290
+.process_links <- function(nodes, links) {
+  # subset to edges in nodes tbl_df and create new zero-based index
+  links %>%
+    dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
+    dplyr::mutate(source = match(source, nodes$rowid) - 1,
+                  target = match(target, nodes$rowid) - 1)
+}
+
+clear <- function(leading_edge, cutoff = 0.25) {
+  nodes <- .process_nodes(genesets) %>%
+    filter(geneset %in% leading_edge)
+
+  links <- .process_links(nodes, genesets_links) %>%
+    filter(jaccard >= cutoff)
+
+  networkD3::forceNetwork(Links = links, #links_small,
+                          Nodes = nodes, #nodes_small,
+                          NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
+                          Source = 'source', Target = 'target', Value = 'jaccard',
+                          linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
+                          fontSize = 24, fontFamily = 'sans-serif', opacity = 0.75,
+                          zoom = F, legend = T, bounded = T, opacityNoHover = 0.25,
+                          charge = -250)
+}
