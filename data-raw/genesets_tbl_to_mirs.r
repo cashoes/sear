@@ -54,7 +54,8 @@ genesets_mirs <- genesets %>%
   dplyr::rowwise() %>%
   dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
 
-save(genesets_mirs, file = 'data/genesets_mirs.rda')
+# finally, save object
+devtools::use_data(genesets_mirs, overwrite = T)
 
 # system.time({
 #   foo <- genesets %>%
