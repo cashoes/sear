@@ -26,11 +26,10 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   type <- match.arg(type)
 
   tbl <- switch(type,
-                mrna = genesets,
-                mirna = genesets_mirs)
-  uni <- switch(type,
-                mrna = genesets$members %>% unlist() %>% unique(),
-                mirna = genesets_mirs$members %>% unlist() %>% unique())
+                mrna = genesets %>% dplyr::select(members = members_mrna),
+                mirna = genesets %>% dplyr::select(members = members_mirna))
+
+  uni <- tbl$members %>% unlist() %>% unique()
 
   # check type of input
   if (sum(genes %in% uni)/length(genes) < 0.25)
