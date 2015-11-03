@@ -35,10 +35,9 @@
 #'   \item members_mrna: gene members (using HUGO Gene Nomenclature Committee
 #'   [HGNC] gene symbols)
 #'   #'   \item members_mirna: miRNA members (using naming convention used by
-#'   mirBase; described: Victor Ambros, Bonnie Bartel, David P. Bartel,
-#'   Christopher B. Burge, James C. Carrington, Xuemei Chen, Gideon Dreyfuss,
-#'   Sean R. Eddy, Sam Griffiths-Jones, Mhairi Marshall, Marjori Matzke, Gary
-#'   Ruvkun, and Thomas Tuschl. A uniform system for microRNA annotation. RNA 2003 9(3):277-279.)
+#'   mirBase; described in:
+#'   Victor Ambros, Bonnie Bartel, et al. A uniform system for microRNA
+#'   annotation. RNA 2003 9(3):277-279.)
 #' }
 "genesets"
 
