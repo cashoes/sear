@@ -77,5 +77,9 @@ genesets$subcollection[genesets$subcollection == 'ALL'] <- genesets$collection[g
 genesets$collection <- genesets$collection %>% tolower()
 genesets$subcollection <- genesets$subcollection %>% tolower()
 
+# modify naming to account for miRNA mapping to come
+genesets <- genesets %>%
+  select(collection, subcollection, geneset, members_mrna = members)
+
 # finally, save object
 devtools::use_data(genesets, overwrite = T)

@@ -55,18 +55,6 @@ genesets_mirs <- genesets %>%
   dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
 
 # finally, save object
-devtools::use_data(genesets_mirs, overwrite = T)
-
-# system.time({
-#   foo <- genesets %>%
-#   slice(1:100) %>%
-#   last() %>%
-#   map(getmirs, mirs_annot)
-# })
-#
-# system.time({
-#   genesets %>%
-#     dplyr::slice(1:100) %>%
-#     dplyr::rowwise() %>%
-#     dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
-# })
+data("genesets")
+genesets$members_mirna <- genesets_mirs$members
+devtools::use_data(genesets, overwrite = T)
