@@ -105,8 +105,8 @@ clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25, trim =
     links <- .process_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
-  networkD3::forceNetwork(Links = links, #links_small,
-                          Nodes = nodes, #nodes_small,
+  networkD3::forceNetwork(Links = links,
+                          Nodes = nodes,
                           NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
                           Source = 'source', Target = 'target', Value = 'jaccard',
                           linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
