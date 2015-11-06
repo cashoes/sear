@@ -82,6 +82,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 }
 
 clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25, trim = TRUE) {
+  data("genesets")
   type <- match.arg(type)
   tbl <- switch(type,
                 mrna  = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mrna),
