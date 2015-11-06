@@ -51,7 +51,6 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                                        length(uni) - n_genes,
                                        n_geneset)) %>%
     dplyr::ungroup(.) %>%
-    dplyr::select(-members) %>%
     dplyr::group_by(collection) %>%
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
     dplyr::ungroup(.)
