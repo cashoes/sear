@@ -66,7 +66,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
     dplyr::add_rownames('rowid') %>%
     dplyr::mutate(rowid = as.numeric(rowid) - 1,
                   size = unlist(purrr::map(members, length))) %>%
-    dplyr::select(rowid, geneset, collection, subcollection, size, members)
+    dplyr::select(rowid, size, everything())
 }
 
 .process_links <- function(nodes) {
