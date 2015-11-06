@@ -69,10 +69,14 @@ sear <- function(genes, type = c("mrna", "mirna")) {
     dplyr::select(rowid, geneset, collection, subcollection, size, members)
 }
 
-.process_links <- function(nodes, links) {
-  # subset to edges in nodes tbl_df and create new zero-based index
-  links %>%
-    dplyr::filter(source %in% nodes$rowid, target %in% nodes$rowid) %>%
+.process_links <- function(nodes) {
+  ref <- nodes$members
+  names(ref) <- nodes$rowid
+  t(combn(as.numeric(names(ref)), 2)) %>%
+    as.data.frame(.) %>%
+    dplyr::tbl_df(.) %>%
+    dplyr::rename(source = V1, target = V2) %>%
+    dplyr::mutate(jaccard  = unlist(map2(ref[as.character(source)], ref[as.character(target)], .jaccard))) %>%
     dplyr::mutate(source = match(source, nodes$rowid) - 1,
                   target = match(target, nodes$rowid) - 1)
 }
