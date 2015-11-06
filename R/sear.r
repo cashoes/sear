@@ -62,8 +62,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 }
 
 .process_nodes <- function(nodes) {
-  # add zero-indexed rowid column for networkD3
-  nodes <- nodes %>%
+  nodes %>%
     dplyr::add_rownames('rowid') %>%
     dplyr::mutate(rowid = as.numeric(rowid) - 1,
                   size = unlist(purrr::map(members, length))) %>%
