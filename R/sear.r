@@ -23,8 +23,8 @@
 #' input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
 #' sear(input, type = 'mrna')
 sear <- function(genes, type = c("mrna", "mirna")) {
+  data("genesets")
   type <- match.arg(type)
-
   tbl <- switch(type,
                 mrna  = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mrna),
                 mirna = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mirna))
