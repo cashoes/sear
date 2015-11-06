@@ -81,7 +81,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                   target = match(target, nodes$rowid) - 1)
 }
 
-clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25) {
+clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25, trim = TRUE) {
   type <- match.arg(type)
   tbl <- switch(type,
                 mrna  = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mrna),
@@ -92,6 +92,18 @@ clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25) {
 
   links <- .process_links(nodes) %>%
     filter(jaccard >= cutoff)
+
+  if (trim) {
+    selection <- links %>%
+      dplyr::group_by(source) %>%
+      dplyr::select(node = source, jaccard) %>%
+      dplyr::summarise(n = sum(jaccard >= cutoff)) %>%
+      dplyr::arrange(desc(n)) %>%
+      dplyr::filter(n >= 5) %>%
+      dplyr::first(.)
+    nodes <- nodes %>% dplyr::slice(selection + 1)
+    links <- .process_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
+  }
 
   networkD3::forceNetwork(Links = links, #links_small,
                           Nodes = nodes, #nodes_small,
