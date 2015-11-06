@@ -40,17 +40,3 @@
 #'   annotation. RNA 2003 9(3):277-279.)
 #' }
 "genesets"
-
-#' Adjacency of 10,786 annotated gene sets as a dyadic table
-#'
-#' A dataset containing the Jaccard coefficient for all pairwise comparisons
-#' between all genesets. Self reflective edges and zero edges are removed. The
-#' variables are as follows:
-#'
-#' @format A data frame with 22,081,622 rows and 3 variables:
-#' \itemize{
-#'   \item source: zero-indexed row of first geneset of pair that was compared
-#'   \item target: zero-indexed row of second geneset of pair that was compared
-#'   \item jaccard: jaccard coefficient - \eqn{|A \cap B| / |A \cup B|}
-#' }
-"genesets_links"
