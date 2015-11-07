@@ -26,8 +26,8 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   data("genesets")
   type <- match.arg(type)
   tbl <- switch(type,
-                mrna  = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mrna),
-                mirna = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mirna))
+                mrna  = genesets %>% dplyr::select(members = members_mrna, -members_mirna),
+                mirna = genesets %>% dplyr::select(members = members_mirna, -members_mrna))
   uni <- tbl$members %>% unlist() %>% unique()
 
   # check type of input
