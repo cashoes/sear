@@ -46,10 +46,10 @@ sear <- function(genes, type = c("mrna", "mirna")) {
     dplyr::mutate(n_genes = length(genes),
                   n_geneset = length(members),
                   intersect = length(intersect(genes, members)),
-                  p_value = 1 - phyper(intersect - 1,
-                                       n_genes,
-                                       length(uni) - n_genes,
-                                       n_geneset)) %>%
+                  p_value   = phyper(intersect - 1,
+                                     n_genes,
+                                     length(uni) - n_genes,
+                                     n_geneset, lower.tail = F)) %>%
     dplyr::ungroup(.) %>%
     dplyr::group_by(collection) %>%
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
