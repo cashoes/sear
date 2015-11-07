@@ -74,8 +74,9 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 
 clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 
-  nodes <- .process_nodes(tbl) %>%
-    filter(geneset %in% leading_edge)
+  nodes <- leading_edge %>%
+    dplyr::add_rownames('rowid') %>%
+    dplyr::mutate(rowid = as.numeric(rowid) - 1)
 
   links <- .process_links(nodes) %>%
     filter(jaccard >= cutoff)
