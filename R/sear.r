@@ -73,11 +73,6 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 }
 
 clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25, trim = TRUE) {
-  data("genesets")
-  type <- match.arg(type)
-  tbl <- switch(type,
-                mrna  = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mrna),
-                mirna = genesets %>% dplyr::select(collection, subcollection, geneset, members = members_mirna))
 
   nodes <- .process_nodes(tbl) %>%
     filter(geneset %in% leading_edge)
