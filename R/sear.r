@@ -60,14 +60,6 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   length(intersect(s1, s2))/length(union(s1, s2))
 }
 
-.process_nodes <- function(nodes) {
-  nodes %>%
-    dplyr::add_rownames('rowid') %>%
-    dplyr::mutate(rowid = as.numeric(rowid) - 1,
-                  size = unlist(purrr::map(members, length))) %>%
-    dplyr::select(rowid, size, everything())
-}
-
 .process_links <- function(nodes) {
   ref <- nodes$members
   names(ref) <- nodes$rowid
