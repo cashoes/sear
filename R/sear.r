@@ -60,7 +60,7 @@ sear <- function(input, type = c("mrna", "mirna")) {
   length(intersect(s1, s2))/length(union(s1, s2))
 }
 
-.process_links <- function(nodes) {
+.rebase_links <- function(nodes) {
   ref <- nodes$members
   names(ref) <- nodes$rowid
   t(combn(as.numeric(names(ref)), 2)) %>%
@@ -78,7 +78,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
     dplyr::add_rownames('rowid') %>%
     dplyr::mutate(rowid = as.numeric(rowid) - 1)
 
-  links <- .process_links(nodes) %>%
+  links <- .rebase_links(nodes) %>%
     filter(jaccard >= cutoff)
 
   if (trim) {
@@ -90,7 +90,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
       dplyr::filter(n >= 5) %>%
       dplyr::first(.)
     nodes <- nodes %>% dplyr::slice(selection + 1)
-    links <- .process_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
+    links <- .rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
   networkD3::forceNetwork(Links = links,
