@@ -72,7 +72,7 @@ sear <- function(genes, type = c("mrna", "mirna")) {
                   target = match(target, nodes$rowid) - 1)
 }
 
-clear <- function(leading_edge, type = c('mrna', 'mirna'), cutoff = 0.25, trim = TRUE) {
+clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 
   nodes <- .process_nodes(tbl) %>%
     filter(geneset %in% leading_edge)
