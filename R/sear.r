@@ -22,7 +22,7 @@
 #'
 #' input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
 #' sear(input, type = 'mrna')
-sear <- function(genes, type = c("mrna", "mirna")) {
+sear <- function(input, type = c("mrna", "mirna")) {
   data("genesets")
   type <- match.arg(type)
   tbl <- switch(type,
@@ -31,21 +31,21 @@ sear <- function(genes, type = c("mrna", "mirna")) {
   uni <- tbl$members %>% unlist() %>% unique()
 
   # check type of input
-  if (sum(genes %in% uni)/length(genes) < 0.25)
+  if (sum(input %in% uni)/length(input) < 0.25)
     stop(sprintf("You selected type = '%s', but many of your features are not recognized.", type))
 
   # only keep valid symbols
-  genes <- genes[genes %in% uni]
+  input <- input[input %in% uni]
 
   # check size of input
-  if (length(unique(genes)) < 10)
-    warning("You submitted <10 valid symbols. Results may not be meaningful with so few genes.")
+  if (length(unique(input)) < 10)
+    warning("You submitted <10 valid symbols. Results may not be meaningful with so few inputs.")
 
   tbl %>%
     dplyr::rowwise(.) %>%
-    dplyr::mutate(n_input   = length(genes),
+    dplyr::mutate(n_input   = length(input),
                   n_geneset = length(members),
-                  intersect = length(intersect(genes, members)),
+                  intersect = length(intersect(input, members)),
                   p_value   = phyper(intersect - 1,
                                      n_input,
                                      length(uni) - n_input,
