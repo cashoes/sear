@@ -43,12 +43,12 @@ sear <- function(genes, type = c("mrna", "mirna")) {
 
   tbl %>%
     dplyr::rowwise(.) %>%
-    dplyr::mutate(n_genes = length(genes),
+    dplyr::mutate(n_input   = length(genes),
                   n_geneset = length(members),
                   intersect = length(intersect(genes, members)),
                   p_value   = phyper(intersect - 1,
                                      n_genes,
-                                     length(uni) - n_genes,
+                                     length(uni) - n_input,
                                      n_geneset, lower.tail = F)) %>%
     dplyr::ungroup(.) %>%
     dplyr::group_by(collection) %>%
