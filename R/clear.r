@@ -29,7 +29,7 @@
   cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
   # cols <- c('blue', 'purple', 'red')
   cols <- paste0("'", paste(cols, collapse = "', '"), "'")
-  range <- c(0, 5, 10, 50, 100, 200, 300)
+  range <- c(0, 5, 10, 50, 100, 200, -log10(.Machine$double.xmin) %>% ceiling())
   range <- paste(range, collapse = ", ")
   networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
 }
@@ -39,7 +39,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
   nodes <- leading_edge %>%
     dplyr::add_rownames('rowid') %>%
     dplyr::mutate(rowid = as.numeric(rowid) - 1,
-                  group = -log10(fdr))
+                  group = -log10(fdr + .Machine$double.xmin))
 
   links <- .rebase_links(nodes) %>%
     filter(jaccard >= cutoff)
