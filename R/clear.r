@@ -25,7 +25,6 @@
     nodes <- nodes %>% dplyr::slice(selection + 1)
 }
 
-clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 .create_colorscale <- function(nodes, palette) {
   cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
   # cols <- c('blue', 'purple', 'red')
@@ -34,6 +33,8 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
   range <- paste(range, collapse = ", ")
   networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
 }
+
+clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
 
   nodes <- leading_edge %>%
     dplyr::add_rownames('rowid') %>%
