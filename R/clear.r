@@ -48,7 +48,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 
   networkD3::forceNetwork(Links = links,
                           Nodes = nodes,
-                          NodeID = 'geneset', Nodesize = 'size', Group = 'subcollection',
+                          NodeID = 'geneset', Nodesize = 'n_geneset', Group = 'group',
                           Source = 'source', Target = 'target', Value = 'jaccard',
                           linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
                           fontSize = 24, fontFamily = 'sans-serif', opacity = 0.75,
