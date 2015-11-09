@@ -26,6 +26,14 @@
 }
 
 clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
+.create_colorscale <- function(nodes, palette) {
+  cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
+  # cols <- c('blue', 'purple', 'red')
+  cols <- paste0("'", paste(cols, collapse = "', '"), "'")
+  range <- c(0, 5, 10, 50, 100, 200, 300)
+  range <- paste(range, collapse = ", ")
+  networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
+}
 
   nodes <- leading_edge %>%
     dplyr::add_rownames('rowid') %>%
@@ -45,15 +53,6 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
       dplyr::first(.)
     nodes <- nodes %>% dplyr::slice(selection + 1)
     links <- .rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
-  }
-
-  create_colorscale <- function(nodes, palette) {
-    cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
-    # cols <- c('blue', 'purple', 'red')
-    cols <- paste0("'", paste(cols, collapse = "', '"), "'")
-    range <- c(0, 5, 10, 50, 100, 200, 300)
-    range <- paste(range, collapse = ", ")
-    networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
   }
 
   networkD3::forceNetwork(Links = links,
