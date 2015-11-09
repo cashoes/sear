@@ -60,7 +60,10 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
                           NodeID = 'geneset', Nodesize = 'n_geneset', Group = 'group',
                           Source = 'source', Target = 'target', Value = 'jaccard',
                           linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
-                          fontSize = 24, fontFamily = 'sans-serif', opacity = 0.75,
+                          # colourScale = JS("d3.scale.category20c()"),
+                          colourScale = create_colorscale(nodes, 'BuPu'),
+                          # colourScale = networkD3::JS("d3.scale.ordinal().domain(['foo', 'bar', 'baz']).range(colorbrewer.RdBu[9])"),
+                          fontSize = 16, fontFamily = 'sans-serif', opacity = 0.75,
                           zoom = F, legend = T, bounded = T, opacityNoHover = 0.25,
-                          charge = -250)
+                          charge = -300)
 }
