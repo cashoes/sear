@@ -29,7 +29,8 @@ clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 
   nodes <- leading_edge %>%
     dplyr::add_rownames('rowid') %>%
-    dplyr::mutate(rowid = as.numeric(rowid) - 1)
+    dplyr::mutate(rowid = as.numeric(rowid) - 1,
+                  group = -log10(fdr))
 
   links <- .rebase_links(nodes) %>%
     filter(jaccard >= cutoff)
