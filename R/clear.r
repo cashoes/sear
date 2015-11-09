@@ -45,14 +45,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
     filter(jaccard >= cutoff)
 
   if (trim) {
-    selection <- links %>%
-      dplyr::group_by(source) %>%
-      dplyr::select(node = source, jaccard) %>%
-      dplyr::summarise(n = sum(jaccard >= cutoff)) %>%
-      dplyr::arrange(desc(n)) %>%
-      dplyr::filter(n >= 1) %>%
-      dplyr::first(.)
-    nodes <- nodes %>% dplyr::slice(selection + 1)
+    nodes <- .trim_links(nodes, links, cutoff)
     links <- .rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
