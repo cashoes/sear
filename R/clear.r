@@ -14,6 +14,17 @@
                   target = match(target, nodes$rowid) - 1)
 }
 
+.trim_links <- function(nodes, links) {
+    selection <- links %>%
+      dplyr::group_by(source) %>%
+      dplyr::select(node = source, jaccard) %>%
+      dplyr::summarise(n = sum(jaccard >= 0.25)) %>%
+      dplyr::arrange(desc(n)) %>%
+      dplyr::filter(n >= 1) %>%
+      dplyr::first(.)
+    nodes <- nodes %>% dplyr::slice(selection + 1)
+}
+
 clear <- function(leading_edge, cutoff = 0.25, trim = TRUE) {
 
   nodes <- leading_edge %>%
