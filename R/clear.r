@@ -14,11 +14,11 @@
                   target = match(target, nodes$rowid) - 1)
 }
 
-.trim_links <- function(nodes, links) {
+.trim_links <- function(nodes, links, cutoff) {
     selection <- links %>%
       dplyr::group_by(source) %>%
       dplyr::select(node = source, jaccard) %>%
-      dplyr::summarise(n = sum(jaccard >= 0.25)) %>%
+      dplyr::summarise(n = sum(jaccard >= cutoff)) %>%
       dplyr::arrange(desc(n)) %>%
       dplyr::filter(n >= 1) %>%
       dplyr::first(.)
