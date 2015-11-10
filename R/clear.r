@@ -20,7 +20,7 @@
       dplyr::select(node = source, jaccard) %>%
       dplyr::summarise(n = sum(jaccard >= cutoff)) %>%
       dplyr::arrange(desc(n)) %>%
-      dplyr::filter(n >= 1) %>%
+      dplyr::filter(n > 0) %>%
       dplyr::first(.)
     nodes <- nodes %>% dplyr::slice(selection + 1)
 }
