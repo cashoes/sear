@@ -70,7 +70,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
                           Source = 'source', Target = 'target', Value = 'jaccard',
                           linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
                           colourScale = .create_colorscale(nodes, 'BuPu'),
-                          fontSize = 16, fontFamily = 'sans-serif', opacity = 0.75,
-                          zoom = F, legend = T, bounded = T, opacityNoHover = 0.25,
+                          fontSize = 16, fontFamily = 'sans-serif', opacity = 0.85,
+                          zoom = F, legend = T, bounded = T, opacityNoHover = 0.50,
                           charge = -300)
 }
