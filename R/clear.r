@@ -9,7 +9,7 @@
     as.data.frame(.) %>%
     dplyr::tbl_df(.) %>%
     dplyr::rename(source = V1, target = V2) %>%
-    dplyr::mutate(jaccard  = unlist(map2(ref[as.character(source)], ref[as.character(target)], .jaccard))) %>%
+    dplyr::mutate(jaccard  = unlist(purrr::map2(ref[as.character(source)], ref[as.character(target)], .jaccard))) %>%
     dplyr::mutate(source = match(source, nodes$rowid) - 1,
                   target = match(target, nodes$rowid) - 1)
 }
