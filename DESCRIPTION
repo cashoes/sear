@@ -19,7 +19,9 @@ LazyData: true
 Imports: 
     dplyr (>= 0.4.3),
     magrittr,
-    purrr
+    purrr,
+    RColorBrewer,
+    networkD3
 Suggests: 
     testthat
 RoxygenNote: 5.0.0
