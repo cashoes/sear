@@ -29,8 +29,16 @@ any of the methods available to `p/adjust()`.
 }
 \examples{
 
+library(dplyr)
 data('genesets')
-input <- genesets \%>\% filter(collection == 'tissues') \%>\% nth(4) \%>\% unlist() \%>\% unique() \%>\% sample(100)
-output <- sear(input, type = 'mrna') \%>\% arrange(fdr) \%>\% slice(1:100)
+input <- genesets \%>\%
+  filter(collection == 'tissues') \%>\%
+  nth(4) \%>\%
+  unlist() \%>\%
+  unique() \%>\%
+  sample(100)
+output <- sear(input, type = 'mrna') \%>\%
+  arrange(fdr) \%>\%
+  slice(1:100)
 }
 
