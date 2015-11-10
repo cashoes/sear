@@ -34,6 +34,21 @@
   networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
 }
 
+#' Clear
+#'
+#' @param leading_edge The output of running sear on an input list of mRNAs or
+#'   miRNA symbols.
+#' @param cutoff A numeric value between 0 and 1. The minimum value of the
+#'   jaccard coefficient to show links between genesets.
+#' @param trim A logical value. Whether to perform trimming of non-connected
+#'   nodes.
+#' @importFrom magrittr "%>%"
+#' @export
+#' @examples
+#'
+#' input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
+#' output <- sear(input, type = 'mrna')
+#' clear(output, cutoff = 0.25, trim = TRUE)
 clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
 
   nodes <- leading_edge %>%
