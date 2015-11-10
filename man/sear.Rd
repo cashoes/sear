@@ -4,17 +4,17 @@
 \alias{sear}
 \title{Simple enrichment analysis in R using the MSigDB collections.}
 \usage{
-sear(genes, type = c("mrna", "mirna"))
+sear(input, type = c("mrna", "mirna"))
 }
 \arguments{
-\item{genes}{A character vector of HUGO gene naming commitee (HGNC) gene
-symbols.}
-
 \item{type}{A character string. The type of symbols in the input: 'mrna' for
 gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
 either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
 from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
 Acids Res. 43, 3490-3497.}
+
+\item{genes}{A character vector of HUGO gene naming commitee (HGNC) gene
+symbols.}
 }
 \description{
 Carry out enrichment analysis against some or all of the MSigDB collections
