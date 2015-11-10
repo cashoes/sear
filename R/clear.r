@@ -29,7 +29,9 @@
   cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
   # cols <- c('blue', 'purple', 'red')
   cols <- paste0("'", paste(cols, collapse = "', '"), "'")
-  range <- c(0, 5, 10, 50, 100, 200, -log10(.Machine$double.xmin) %>% ceiling())
+  # range <- c(0, 5, 10, 50, 100, 200, -log10(.Machine$double.xmin) %>% ceiling())
+  max <- -log10(nodes$fdr) %>% max() %>% ceiling()
+  range <- quantile(0:max) %>% ceiling()
   range <- paste(range, collapse = ", ")
   networkD3::JS(paste0('d3.scale.linear().domain([', range, ']).range([', cols, '])'))
 }
