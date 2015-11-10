@@ -9,7 +9,7 @@
 #' adjusted over each collection (optimistic) or globally (pessimistic), using
 #' any of the methods available to `p/adjust()`.
 #'
-#' @param genes A character vector of HUGO gene naming commitee (HGNC) gene
+#' @param input A character vector of HUGO gene naming commitee (HGNC) gene
 #'   symbols.
 #' @param type A character string. The type of symbols in the input: 'mrna' for
 #'   gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
