@@ -20,8 +20,9 @@
 #' @export
 #' @examples
 #'
-#' input <- c("TTLL4", "CTSK", "NNMT", "TGFBR2", "MAGED2", "ASB13", "CCDC80", "APBB2", "RABEP1", "FBP1")
-#' sear(input, type = 'mrna')
+#' data('genesets')
+#' input <- genesets %>% filter(collection == 'tissues') %>% nth(4) %>% unlist() %>% unique() %>% sample(100)
+#' output <- sear(input, type = 'mrna') %>% arrange(fdr) %>% slice(1:100)
 sear <- function(input, type = c("mrna", "mirna")) {
   data("genesets")
   type <- match.arg(type)
