@@ -13,7 +13,7 @@
   \item geneset: name of the gene set in the collection
   \item members_mrna: gene members (using HUGO Gene Nomenclature Committee
   [HGNC] gene symbols)
-  #'   \item members_mirna: miRNA members (using naming convention used by
+  \item members_mirna: miRNA members (using naming convention used by
   mirBase; described in:
   Victor Ambros, Bonnie Bartel, et al. A uniform system for microRNA
   annotation. RNA 2003 9(3):277-279.)
