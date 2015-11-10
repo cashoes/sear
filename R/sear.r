@@ -32,7 +32,7 @@
 #'   arrange(fdr) %>%
 #'   slice(1:100)
 sear <- function(input, type = c("mrna", "mirna")) {
-  data("genesets")
+  # data("genesets")
   type <- match.arg(type)
   tbl <- switch(type,
                 mrna   = dplyr::select(genesets, collection:geneset, members = members_mrna),
