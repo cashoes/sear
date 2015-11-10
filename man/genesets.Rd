@@ -43,8 +43,8 @@ repressor." Blood 115.26 (2010): 5376-5384.
 
 Gene sets were also mapped to equivalent validated targetting miRNAs to
 enable unbiased enrichment analysis of miRNA lists, as described in:
-Godard, P. & van Eyll, J. Pathway analysis from lists of microRNAs: common
-pitfalls and alternative strategy. Nucl. Acids Res. 43, 3490–3497 (2015).
+Godard, P. & van Eyll, J. Pathway analysis from lists of microRNAs: common
+pitfalls and alternative strategy. Nucl. Acids Res. 43, 3490-3497 (2015).
 
 Variables are as follows:
 }
