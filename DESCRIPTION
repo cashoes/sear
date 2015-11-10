@@ -12,16 +12,16 @@ Description: A package for simple enrichment analysis using: 1.MSigDB:
     Benita, Yair, et al. "Gene enrichment profiles reveal T-cell development,
     differentiation, and lineage-specific transcription factors including ZBTB25 as
     a novel NF-AT repressor." Blood 115.26 (2010): 5376-5384.
-Depends: 
+Depends:
     R (>= 3.2.1)
-License: MIT
+License: GPL-3 | file LICENSE
 LazyData: true
-Imports: 
+Imports:
     dplyr (>= 0.4.3),
     magrittr,
     purrr,
     RColorBrewer,
     networkD3
-Suggests: 
+Suggests:
     testthat
 RoxygenNote: 5.0.0
