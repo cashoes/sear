@@ -42,7 +42,7 @@ sear <- function(input, type = c("mrna", "mirna")) {
 
   # warn on potential input issues
   recognized <- input[input %in% uni]
-  if (recognized < 10) {
+  if (length(recognized) < 10) {
     warning(sprintf("Submitted %s symbols, but only %s are recognized.",
                     length(input), length(recognized)))
   }
