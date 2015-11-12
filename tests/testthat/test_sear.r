@@ -7,5 +7,5 @@ test_that("Inputs are checked to contain valid symbols", {
 
 test_that("Inputs are checked to contain sufficient number of valid symbols", {
   expect_warning(sear("ACTB"))
-  expect_error(sear(c("ACTB", "foo", "bar", "baz", "bat")))
+  expect_warning(sear(c("ACTB", "foo", "bar", "baz", "bat")))
 })
