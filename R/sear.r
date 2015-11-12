@@ -40,16 +40,13 @@ sear <- function(input, type = c("mrna", "mirna")) {
                                        members = members_mirna))
   uni <- tbl$members %>% unlist() %>% unique()
 
-  # check type of input
-  if (sum(input %in% uni)/length(input) < 0.25)
-    stop(sprintf("Type = '%s', but many features are not recognized.", type))
-
-  # only keep valid symbols
-  input <- input[input %in% uni]
-
-  # check size of input
-  if (length(unique(input)) < 10)
-    warning("Submitted <10 valid symbols. Results may not be meaningful.")
+  # warn on potential input issues
+  recognized <- input[input %in% uni]
+  if (recognized < 10) {
+    warning(sprintf("Submitted %s symbols, but only %s are recognized.",
+                    length(input), length(recognized)))
+  }
+  input <- recognized
 
   tbl %>%
     dplyr::rowwise(.) %>%
