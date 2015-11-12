@@ -43,14 +43,14 @@ sear <- function(input, type = c("mrna", "mirna")) {
 
   # check type of input
   if (sum(input %in% uni)/length(input) < 0.25)
-    stop(sprintf("You selected type = '%s', but many of your features are not recognized.", type))
+    stop(sprintf("Type = '%s', but many features are not recognized.", type))
 
   # only keep valid symbols
   input <- input[input %in% uni]
 
   # check size of input
   if (length(unique(input)) < 10)
-    warning("You submitted <10 valid symbols. Results may not be meaningful with so few inputs.")
+    warning("Submitted <10 valid symbols. Results may not be meaningful.")
 
   tbl %>%
     dplyr::rowwise(.) %>%
