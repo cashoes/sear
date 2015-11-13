@@ -66,17 +66,6 @@ rebase_links <- function(nodes) {
                   target = match(target, nodes$rowid) - 1)
 }
 
-trim_links <- function(nodes, links, cutoff) {
-  selection <- links %>%
-    dplyr::group_by(source) %>%
-    dplyr::select(node = source, jaccard) %>%
-    dplyr::summarise(n = sum(jaccard >= cutoff)) %>%
-    dplyr::arrange(desc(n)) %>%
-    dplyr::filter(n > 0) %>%
-    dplyr::first(.)
-  nodes <- nodes %>% dplyr::slice(selection + 1)
-}
-
 create_colorscale <- function(nodes, palette) {
   cols <- RColorBrewer::brewer.pal(9, palette)[-c(1:2)]
   # cols <- c('blue', 'purple', 'red')
