@@ -33,7 +33,13 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
     filter(jaccard >= cutoff)
 
   if (trim) {
-    nodes <- trim_links(nodes, links, cutoff)
+    selection <- c(links$source, links$target) %>%
+      unique() %>%
+      match(., (1:nrow(nodes) - 1), nomatch = NA) %>%
+      sort()
+    nodes <- nodes %>%
+      dplyr::slice(selection) %>%
+      dplyr::mutate(rowid = (0:(n() - 1)))
     links <- rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
