@@ -43,15 +43,16 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
     links <- rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
-  networkD3::forceNetwork(Links = links,
-                          Nodes = nodes,
-                          NodeID = 'geneset', Nodesize = 'n_geneset', Group = 'group',
-                          Source = 'source', Target = 'target', Value = 'jaccard',
-                          linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
-                          colourScale = create_colorscale(nodes, 'BuPu'),
-                          fontSize = 16, fontFamily = 'sans-serif', opacity = 0.85,
-                          zoom = F, legend = T, bounded = T, opacityNoHover = 0.00,
-                          charge = -300)
+  networkD3::forceNetwork(
+    Links = links,
+    Nodes = nodes,
+    NodeID = 'geneset', Nodesize = 'n_geneset', Group = 'group',
+    Source = 'source', Target = 'target', Value = 'jaccard',
+    linkDistance = networkD3::JS("function(d) { return d.value * 100; }"),
+    colourScale = create_colorscale(nodes, 'BuPu'),
+    fontSize = 16, fontFamily = 'sans-serif', opacity = 0.85,
+    zoom = F, legend = T, bounded = T, opacityNoHover = 0.00,
+    charge = -300)
 }
 
 jaccard  <- function(s1, s2) {
