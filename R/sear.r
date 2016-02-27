@@ -54,9 +54,9 @@ sear <- function(input, type = c("mrna", "mirna")) {
                   n_geneset = length(members),
                   intersect = length(intersect(input, members)),
                   p_value   = phyper(intersect - 1,
-                                     n_input,
-                                     length(uni) - n_input,
-                                     n_geneset, lower.tail = F)) %>%
+                                     n_geneset,
+                                     length(uni) - n_geneset,
+                                     n_input, lower.tail = F)) %>%
     dplyr::ungroup(.) %>%
     dplyr::group_by(collection) %>%
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
