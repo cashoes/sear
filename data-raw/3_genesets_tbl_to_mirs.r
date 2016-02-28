@@ -1,6 +1,8 @@
-# creat mirna version of genesets ----------------------------------------------
-# using mirWalk2.0 data:
-# http://www.umm.uni-heidelberg.de/apps/zmf/mirwalk/holistic.html
+#' creat mirna version of genesets
+#' @author C.Shannon
+#'
+#' using mirWalk2.0 data:
+#' http://www.umm.uni-heidelberg.de/apps/zmf/mirwalk/holistic.html
 
 # read in as list of lists
 files <- list.files(path = "data-raw/mirwalk_2/", pattern = "*.gmt$", full.names = T)
@@ -50,11 +52,12 @@ getmirs <- function(geneset, mirs_annot) {
 
 # caution, slow ~6min with 'validated' subcollection only
 mirs_annot <- tbl_mirs %>% filter(subcollection == 'validated')
-genesets_mirs <- genesets %>%
+collections <- collections %>%
   dplyr::rowwise() %>%
-  dplyr::mutate(members = I(list(getmirs(members, mirs_annot))))
+  dplyr::mutate(members_mirna = I(list(getmirs(members_mrna, mirs_annot))))
+
+# clean up
+rm(files, tbl_mirs, mirs_annot, btms, tissues, msigdb)
 
 # finally, save object
-data("genesets")
-genesets$members_mirna <- genesets_mirs$members
-devtools::use_data(genesets, overwrite = T)
+devtools::use_data(collections, overwrite = T)
