@@ -1,4 +1,4 @@
-#' 10,786 annotated gene sets
+#' Collection of 13,730 annotated gene sets
 #'
 #' A dataset containing nearly 11,000 annotated gene sets from the following
 #' sources:
