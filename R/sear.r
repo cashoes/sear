@@ -32,11 +32,13 @@
 #'   arrange(fdr) %>%
 #'   slice(1:100)
 sear <- function(input, type = c("mrna", "mirna")) {
+  data("collections", envir = environment())
+
   type <- match.arg(type)
   tbl <- switch(type,
-                mrna   = dplyr::select(genesets, collection:geneset,
+                mrna   = dplyr::select(collections, collection:geneset,
                                        members = members_mrna),
-                mirna  = dplyr::select(genesets, collection:geneset,
+                mirna  = dplyr::select(collections, collection:geneset,
                                        members = members_mirna))
   uni <- tbl$members %>% unlist() %>% unique()
 
