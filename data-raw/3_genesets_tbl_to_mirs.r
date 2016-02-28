@@ -60,4 +60,5 @@ collections <- collections %>%
 rm(files, tbl_mirs, mirs_annot, btms, tissues, msigdb)
 
 # finally, save object
+collections <- collections %>% dplyr::ungroup()
 devtools::use_data(collections, overwrite = T)
