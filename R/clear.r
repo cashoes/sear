@@ -11,13 +11,8 @@
 #' @examples
 #'
 #' library(dplyr)
-#' data('genesets')
-#' input <- genesets %>%
-#'   filter(collection == 'tissues') %>%
-#'   nth(4) %>%
-#'   unlist() %>%
-#'   unique() %>%
-#'   sample(100)
+#' data('collections')
+#' input <- collections$members_mrna %>% unlist() %>% unique() %>% sample(100)
 #' output <- sear(input, type = 'mrna') %>%
 #'   arrange(fdr) %>%
 #'   slice(1:100)
