@@ -13,3 +13,6 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+# /data-raw files
+data-raw/*
+!data-raw/*.r
