@@ -29,7 +29,7 @@ parse_gmt <- function(gmt){
 
 
 # BTM as gmt ----
-btm <- parse_gmt('data-raw/misgdb/btm.all.v1.0.symbols.gmt')
+btm <- parse_gmt('data-raw/btm.all.v1.0.symbols.gmt')
 data.frame(collection = 'BTM',
            subcollection = '',
            geneset = names(btm),

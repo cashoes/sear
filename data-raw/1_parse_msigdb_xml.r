@@ -7,7 +7,7 @@
 
 library(xml2)
 
-m <- read_xml('data-raw/misgdb/5.1/msigdb_v5.1.xml')
+m <- read_xml('data-raw/msigdb_v5.1.xml')
 header <- xml_attrs(m)
 sets <- xml_children(m)
 # construct table
