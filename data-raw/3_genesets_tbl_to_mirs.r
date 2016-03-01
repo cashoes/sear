@@ -5,7 +5,7 @@
 #' http://www.umm.uni-heidelberg.de/apps/zmf/mirwalk/holistic.html
 
 # read in as list of lists
-files <- list.files(path = "data-raw/mirwalk_2/", pattern = "*.gmt$", full.names = T)
+files <- list.files(path = "data-raw/mirwalk2/", pattern = "*.gmt$", full.names = T)
 names(files) <- c('validated', '3UTR', '5UTR', 'Body', 'Promoter')
 
 # read files in
@@ -49,12 +49,14 @@ getmirs <- function(geneset, mirs_annot) {
 #     unique()
 # })
 
-
 # caution, slow ~6min with 'validated' subcollection only
 mirs_annot <- tbl_mirs %>% filter(subcollection == 'validated')
-collections <- collections %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(members_mirna = I(list(getmirs(members_mrna, mirs_annot))))
+
+system.time({
+  collections <- collections %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(members_mirna = I(list(getmirs(members_mrna, mirs_annot))))
+})
 
 # clean up
 rm(files, tbl_mirs, mirs_annot, btms, tissues, msigdb)

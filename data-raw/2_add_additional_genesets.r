@@ -29,7 +29,7 @@ parse_gmt <- function(gmt){
 
 
 # BTM as gmt ----
-btm <- parse_gmt('data-raw/btm.all.v1.0.symbols.gmt')
+btm <- parse_gmt('data-raw/btms/btm.all.v1.0.symbols.gmt')
 data.frame(collection = 'BTM',
            subcollection = '',
            geneset = names(btm),
@@ -41,8 +41,8 @@ data.frame(collection = 'BTM',
 rm(btm)
 
 # Benita et al. ----
-tissues <- readRDS("data-raw/Tissues_tbl_df.rds")
-tissues_map <- readRDS("data-raw/Tissues_map_tbl_df.rds")
+tissues <- readRDS("data-raw/tissues/Tissues_tbl_df.rds")
+tissues_map <- readRDS("data-raw/tissues/Tissues_map_tbl_df.rds")
 all(tissues_map$celltype == tissues$geneset)
 
 tissues <- tissues %>%

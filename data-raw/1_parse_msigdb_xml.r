@@ -7,6 +7,7 @@
 
 library(xml2)
 library(dplyr)
+library(purrr)
 
 m <- read_xml('data-raw/msigdb/msigdb_v5.1.xml')
 header <- xml_attrs(m)
@@ -18,6 +19,9 @@ data.frame(collection    = xml_attr(sets, 'CATEGORY_CODE'),
            description   = xml_attr(sets, 'DESCRIPTION_BRIEF'),
            members_mrna  = xml_attr(sets, 'MEMBERS_SYMBOLIZED'),
            stringsAsFactors = F) %>% tbl_df() -> msigdb
+
+msigdb <- msigdb %>%
+  mutate(members_mrna = map(members_mrna, function(x) strsplit(x, ',') %>% unlist()))
 
 attributes(msigdb)$version <- header
 
