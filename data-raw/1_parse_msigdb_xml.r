@@ -6,8 +6,9 @@
 #'   description from metadat for eacg geneset.
 
 library(xml2)
+library(dplyr)
 
-m <- read_xml('data-raw/msigdb_v5.1.xml')
+m <- read_xml('data-raw/msigdb/msigdb_v5.1.xml')
 header <- xml_attrs(m)
 sets <- xml_children(m)
 # construct table
@@ -22,12 +23,3 @@ attributes(msigdb)$version <- header
 
 # clean up
 rm(m, header, sets)
-
-# create members_mirna ----
-
-
-# add-in other genesets ----
-#' @TODO implement
-
-load('R/sysdata.rda')
-foo <- genesets %>% filter(collection %in% c('btm', 'tissues'))
