@@ -54,3 +54,15 @@ rm(tissues_map)
 # Combine ----
 collections <- rbind(msigdb, tissues, btms)
 collections <- collections %>% arrange(collection, subcollection, geneset)
+
+# check distribution of lengths
+table(collections$members_mrna %>% map(length) == 1)
+
+library(ggplot2)
+collections %>%
+  rowwise() %>%
+  mutate(n = length(members_mrna)) %>%
+  ggplot(aes(n, fill = collection)) +
+  geom_histogram() +
+  scale_x_log10() +
+  facet_wrap(~collection, scales = 'free')

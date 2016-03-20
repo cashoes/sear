@@ -58,6 +58,15 @@ system.time({
     dplyr::mutate(members_mirna = I(list(getmirs(members_mrna, mirs_annot))))
 })
 
+library(ggplot2)
+collections %>%
+  rowwise() %>%
+  mutate(n = length(members_mirna)) %>%
+  ggplot(aes(n, fill = collection)) +
+  geom_histogram() +
+  scale_x_log10() +
+  facet_wrap(~collection, scales = 'free')
+
 # clean up
 rm(files, tbl_mirs, mirs_annot, btms, tissues, msigdb)
 
