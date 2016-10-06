@@ -19,7 +19,7 @@ tbl_mirs <- lapply(files, function(gmt){
   gmt <- lapply(gmt, function(x) tail(x, -3))
 })
 # convert lists to list-columns and bind into data.frame
-tbl_mirs <- lapply(tbl_mirs, function(x) data.frame(geneset = names(x), members = I(x))) %>%
+tbl_mirs <- lapply(tbl_mirs, function(x) dplyr::data_frame(geneset = names(x), members = I(x))) %>%
   dplyr::bind_rows(.id = "subcollection") %>%
   dplyr::mutate(collection = 'mirwalk') %>%
   dplyr::select(collection, subcollection, geneset, members) %>%
@@ -59,7 +59,7 @@ mirs_annot <- tbl_mirs %>% filter(subcollection == 'validated')
 system.time({
   collections <- collections %>%
     dplyr::rowwise(.) %>%
-    dplyr::mutate(members_mirna = I(getmirs(members_mrna, mirs_annot)))
+    dplyr::mutate(members_mirna = list(getmirs(members_mrna, mirs_annot)))
 })
 
 library(ggplot2)
