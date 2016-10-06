@@ -8,6 +8,9 @@
 files <- list.files(path = "data-raw/mirwalk2/", pattern = "*.gmt$", full.names = T)
 names(files) <- c('validated', '3UTR', '5UTR', 'Body', 'Promoter')
 
+# only validated
+files <- files[1]
+
 # read files in
 tbl_mirs <- lapply(files, function(gmt){
   gmt <- readLines(gmt)
@@ -19,7 +22,8 @@ tbl_mirs <- lapply(files, function(gmt){
 tbl_mirs <- lapply(tbl_mirs, function(x) data.frame(geneset = names(x), members = I(x))) %>%
   dplyr::bind_rows(.id = "subcollection") %>%
   dplyr::mutate(collection = 'mirwalk') %>%
-  dplyr::select(collection, subcollection, geneset, members)
+  dplyr::select(collection, subcollection, geneset, members) %>%
+  dplyr::tbl_df()
 
 getmirs <- function(geneset, mirs_annot) {
   mirs_annot %>%
@@ -54,14 +58,14 @@ mirs_annot <- tbl_mirs %>% filter(subcollection == 'validated')
 
 system.time({
   collections <- collections %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(members_mirna = I(list(getmirs(members_mrna, mirs_annot))))
+    dplyr::rowwise(.) %>%
+    dplyr::mutate(members_mirna = I(getmirs(members_mrna, mirs_annot)))
 })
 
 library(ggplot2)
 collections %>%
-  rowwise() %>%
-  mutate(n = length(members_mirna)) %>%
+  dplyr::rowwise(.) %>%
+  dplyr::mutate(n = length(members_mirna)) %>%
   ggplot(aes(n, fill = collection)) +
   geom_histogram() +
   scale_x_log10() +

@@ -66,3 +66,5 @@ collections %>%
   geom_histogram() +
   scale_x_log10() +
   facet_wrap(~collection, scales = 'free')
+
+rm(msigdb, btms, tissues)
