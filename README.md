@@ -1,5 +1,5 @@
 # sear
-##Simple (effin') Enrichment Analysis in R
+**Simple (effin') Enrichment Analysis in R**
 
 A package for simple pathway over-representation analysis.
 
