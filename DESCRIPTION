@@ -1,6 +1,6 @@
 Package: sear
 Title: Simple (effin') enrichment analysis in R
-Version: 0.1
+Version: 0.2
 Authors@R: person("Casey", "Shannon", email = "also.casey@gmail.com", role = c("aut", "cre"))
 Description: A package for simple enrichment analysis using: 1.MSigDB:
     Subramanian, Aravind, et al. "Gene set enrichment analysis: a knowledge-based
