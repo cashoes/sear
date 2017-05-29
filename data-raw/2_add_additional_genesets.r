@@ -38,6 +38,8 @@ data.frame(collection = 'BTM',
            stringsAsFactors = F) %>%
   dplyr::tbl_df() -> btms
 
+# strsplit on ' /// '
+btms$members_mrna <- map(btms$members_mrna, ~ unlist(strsplit(., ' /// ')))
 rm(btm)
 
 # Benita et al. ----
