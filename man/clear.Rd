@@ -29,4 +29,3 @@ output <- sear(input, type = 'mrna') \%>\%
   slice(1:100)
 clear(output, cutoff = 0.25, trim = TRUE)
 }
-

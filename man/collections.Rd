@@ -4,7 +4,8 @@
 \name{collections}
 \alias{collections}
 \title{Collection of 13,730 annotated gene sets}
-\format{A data frame with 10786 rows and 4 variables:
+\format{
+A data frame with 10786 rows and 4 variables:
 \itemize{
   \item collection: origin of the gene set (MSigDB: H - hallmark,
   C1 - positional, C2 - curated, C3 - motif, C4 - computational,
@@ -20,7 +21,8 @@
   mirBase; described in:
   Victor Ambros, Bonnie Bartel, et al. A uniform system for microRNA
   annotation. RNA 2003 9(3):277-279.)
-}}
+}
+}
 \usage{
 collections
 }
@@ -45,4 +47,3 @@ to enable unbiased enrichment analysis of miRNA lists, as described in:
 Variables are as follows:
 }
 \keyword{datasets}
-

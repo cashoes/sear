@@ -4,7 +4,7 @@
 \alias{sear}
 \title{Simple enrichment analysis in R using the MSigDB collections.}
 \usage{
-sear(input, type = c("mrna", "mirna"))
+sear(input, type = c("mrna", "mirna"), return_members = F)
 }
 \arguments{
 \item{input}{A character vector of HUGO gene naming commitee (HGNC) gene
@@ -36,4 +36,3 @@ output <- sear(input, type = 'mrna') \%>\%
   arrange(fdr) \%>\%
   slice(1:100)
 }
-
