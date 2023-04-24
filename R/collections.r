@@ -1,6 +1,6 @@
-#' Collection of 13,730 annotated gene sets
+#' Collection of 34,010 annotated gene sets
 #'
-#' A dataset containing nearly 11,000 annotated gene sets from the following
+#' A dataset containing >34,000 annotated gene sets from the following
 #' sources:
 #'
 #' \itemize{

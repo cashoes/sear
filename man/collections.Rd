@@ -3,7 +3,7 @@
 \docType{data}
 \name{collections}
 \alias{collections}
-\title{Collection of 13,730 annotated gene sets}
+\title{Collection of 34,010 annotated gene sets}
 \format{
 A data frame with 34,010 rows and 4 variables:
 \itemize{
@@ -27,7 +27,7 @@ A data frame with 34,010 rows and 4 variables:
 collections
 }
 \description{
-A dataset containing nearly 11,000 annotated gene sets from the following
+A dataset containing >34,000 annotated gene sets from the following
 sources:
 }
 \details{
