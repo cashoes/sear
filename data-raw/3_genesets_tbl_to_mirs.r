@@ -23,7 +23,7 @@ tbl_mirs <- lapply(tbl_mirs, function(x) dplyr::data_frame(geneset = names(x), m
   dplyr::bind_rows(.id = "subcollection") %>%
   dplyr::mutate(collection = 'mirwalk') %>%
   dplyr::select(collection, subcollection, geneset, members) %>%
-  dplyr::tbl_df()
+  dplyr::as_tibble()
 
 getmirs <- function(geneset, mirs_annot) {
   mirs_annot %>%

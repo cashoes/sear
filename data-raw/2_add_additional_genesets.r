@@ -36,7 +36,7 @@ data.frame(collection = 'BTM',
            description = '',
            members_mrna = I(btm),
            stringsAsFactors = F) %>%
-  dplyr::tbl_df() -> btms
+  dplyr::as_tibble() -> btms
 
 # strsplit on ' /// '
 btms$members_mrna <- purrr::map(btms$members_mrna, ~ unlist(strsplit(., ' /// ')))
