@@ -25,7 +25,7 @@ msigdb <- msigdb %>%
   dplyr::select(collection = collection_name, subcollection = full_name, geneset = standard_name, description = description_brief, symbol) %>%
   dplyr::as_tibble() %>%
   tidyr::nest(members_mrna = symbol) %>%
-  dplyr::mutate(members_mrna = purrr::map(members_mrna, 'symbol'))
+  dplyr::mutate(members_mrna = purrr::map(members_mrna, 'symbol') %>% purrr::set_names(geneset))
 
 
 attributes(msigdb)$version <- 'v2023.1.Hs'
