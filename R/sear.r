@@ -26,7 +26,7 @@
 #' output <- sear(input, type = 'mrna') %>%
 #'   arrange(fdr) %>%
 #'   slice(1:100)
-sear <- function(input, type = c("mrna", "mirna")) {
+sear <- function(input, type = c("mrna", "mirna"), return_members = F) {
   data("collections", envir = environment())
 
   type <- match.arg(type)
@@ -45,7 +45,7 @@ sear <- function(input, type = c("mrna", "mirna")) {
   }
   input <- recognized
 
-  tbl %>%
+  tbl <- tbl %>%
     dplyr::rowwise(.) %>%
     dplyr::mutate(n_input   = length(input),
                   n_geneset = length(members),
@@ -58,4 +58,10 @@ sear <- function(input, type = c("mrna", "mirna")) {
     dplyr::group_by(collection) %>%
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
     dplyr::ungroup(.)
+
+  if(return_members)
+    return(tbl)
+
+  tbl %>%
+    dplyr::select(-members)
 }
