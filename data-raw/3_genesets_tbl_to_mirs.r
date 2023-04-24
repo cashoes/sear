@@ -66,10 +66,10 @@ library(ggplot2)
 collections %>%
   dplyr::rowwise(.) %>%
   dplyr::mutate(n = length(members_mirna)) %>%
-  ggplot(aes(n, fill = collection)) +
-  geom_histogram() +
-  scale_x_log10() +
-  facet_wrap(~collection, scales = 'free')
+  ggplot2::ggplot(aes(n, fill = collection)) +
+  ggplot2::geom_histogram() +
+  ggplot2::scale_x_log10() +
+  ggplot2::facet_wrap(~collection, scales = 'free')
 
 # clean up
 rm(files, tbl_mirs, mirs_annot, btms, tissues, msigdb)
