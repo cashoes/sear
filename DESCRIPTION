@@ -1,6 +1,6 @@
 Package: sear
 Title: Simple (effin') enrichment analysis in R
-Version: 0.2
+Version: 1.0
 Authors@R: person("Casey", "Shannon", email = "also.casey@gmail.com", role = c("aut", "cre"))
 Description: A package for simple enrichment analysis using: 1.MSigDB:
     Subramanian, Aravind, et al. "Gene set enrichment analysis: a knowledge-based
@@ -13,15 +13,13 @@ Description: A package for simple enrichment analysis using: 1.MSigDB:
     differentiation, and lineage-specific transcription factors including ZBTB25 as
     a novel NF-AT repressor." Blood 115.26 (2010): 5376-5384.
 Depends:
-    R (>= 3.2.1)
+    R (>= 4.2.3)
 License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
-    dplyr (>= 0.4.3),
-    magrittr,
-    purrr,
+    tidyverse,
     RColorBrewer,
     networkD3
 Suggests:
     testthat
-RoxygenNote: 5.0.0
+RoxygenNote: 7.2.3
