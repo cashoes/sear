@@ -39,7 +39,7 @@ data.frame(collection = 'BTM',
   dplyr::tbl_df() -> btms
 
 # strsplit on ' /// '
-btms$members_mrna <- map(btms$members_mrna, ~ unlist(strsplit(., ' /// ')))
+btms$members_mrna <- purrr::map(btms$members_mrna, ~ unlist(strsplit(., ' /// ')))
 rm(btm)
 
 # Benita et al. ----
@@ -55,18 +55,18 @@ rm(tissues_map)
 
 # Combine ----
 collections <- rbind(msigdb, tissues, btms)
-collections <- collections %>% arrange(collection, subcollection, geneset)
+collections <- collections %>% dplyr::arrange(collection, subcollection, geneset)
 
 # check distribution of lengths
-table(collections$members_mrna %>% map(length) == 1)
+table(collections$members_mrna %>% purrr::map(length) == 1)
 
 library(ggplot2)
 collections %>%
-  rowwise() %>%
-  mutate(n = length(members_mrna)) %>%
-  ggplot(aes(n, fill = collection)) +
-  geom_histogram() +
-  scale_x_log10() +
-  facet_wrap(~collection, scales = 'free')
+  dplyr::rowwise() %>%
+  dplyr::mutate(n = length(members_mrna)) %>%
+  ggplot2::ggplot(aes(n, fill = collection)) +
+  ggplot2::geom_histogram() +
+  ggplot2::scale_x_log10() +
+  ggplot2::facet_wrap(~collection, scales = 'free')
 
 rm(msigdb, btms, tissues)
