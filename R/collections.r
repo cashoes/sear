@@ -16,8 +16,6 @@
 #'   \item Godard, P. & van Eyll, J. Pathway analysis from lists of microRNAs: common pitfalls and alternative strategy. Nucl. Acids Res. 43, 3490-3497 (2015).
 #' }
 #'
-#' Variables are as follows:
-#'
 #' @format A data frame with 34,010 rows and 4 variables:
 #' \itemize{
 #'   \item collection: origin of the gene set (MSigDB: H - hallmark,

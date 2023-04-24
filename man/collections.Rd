@@ -43,7 +43,5 @@ to enable unbiased enrichment analysis of miRNA lists, as described in:
 \itemize{
   \item Godard, P. & van Eyll, J. Pathway analysis from lists of microRNAs: common pitfalls and alternative strategy. Nucl. Acids Res. 43, 3490-3497 (2015).
 }
-
-Variables are as follows:
 }
 \keyword{datasets}
