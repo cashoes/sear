@@ -30,18 +30,17 @@ sear <- function(input, type = c("mrna", "mirna"), return_members = F) {
   data("collections", envir = environment())
 
   type <- match.arg(type)
-  tbl <- switch(type,
-                mrna   = dplyr::select(collections, collection:geneset,
-                                       members = members_mrna),
-                mirna  = dplyr::select(collections, collection:geneset,
-                                       members = members_mirna))
+  tbl <- switch(
+    type,
+    mrna   = dplyr::select(collections, collection:geneset, members = members_mrna),
+    mirna  = dplyr::select(collections, collection:geneset, members = members_mirna)
+  )
   uni <- tbl$members %>% unlist() %>% unique()
 
   # warn on potential input issues
   recognized <- input[input %in% uni]
-  if (length(recognized) < 10) {
-    warning(sprintf("Submitted %s symbols, but only %s are recognized.",
-                    length(input), length(recognized)))
+  if (length(recognized) < 10 & length(recognized) < length(input)) {
+    warning(sprintf("Submitted %s symbols, but only %s are recognized.", length(input), length(recognized)))
   }
   input <- recognized
 
