@@ -13,11 +13,16 @@
 #' library(dplyr)
 #' data('collections')
 #' input <- collections$members_mrna %>% unlist() %>% unique() %>% sample(100)
-#' output <- sear(input, type = 'mrna') %>%
+#' output <- sear(input, type = 'mrna', return_members = T) %>%
 #'   arrange(fdr) %>%
 #'   slice(1:100)
 #' clear(output, cutoff = 0.25, trim = TRUE)
 clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
+
+  # check input issues
+  if (suppressWarnings(is.null(output$members))) {
+    stop("Clear function requires gene set members. Please re-run `sear` with `return_members = T`.")
+  }
 
   nodes <- leading_edge %>%
     tibble::rownames_to_column('rowid') %>%
