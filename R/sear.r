@@ -16,6 +16,11 @@
 #'   either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
 #'   from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
 #'   Acids Res. 43, 3490-3497.
+#' @param return_members A logical. Whether to include a list-column in the
+#'   return object containing the gene set member genes.
+#' @param return_intersect A logical. Whether to include a list-column in the
+#'   return object containing the genes found in common between the gene set and
+#'   the input.
 #' @importFrom magrittr "%>%"
 #' @export
 #' @examples
@@ -26,7 +31,7 @@
 #' output <- sear(input, type = 'mrna') %>%
 #'   arrange(fdr) %>%
 #'   slice(1:100)
-sear <- function(input, type = c("mrna", "mirna"), return_intersect = T) {
+sear <- function(input, type = c("mrna", "mirna"), return_members = F, return_intersect = T) {
   data("collections", envir = environment())
 
   type <- match.arg(type)
@@ -39,7 +44,10 @@ sear <- function(input, type = c("mrna", "mirna"), return_intersect = T) {
 
   # warn on potential input issues
   recognized <- input[input %in% uni]
-  if (length(recognized) < 10 & length(recognized) < length(input)) {
+  if (length(recognized) == 0) {
+    stop("No symbols were found in gene set collection.")
+  }
+  if (length(recognized) < length(input)) {
     warning(sprintf("Submitted %s symbols, but only %s are recognized.", length(input), length(recognized)))
   }
   input <- recognized
@@ -49,7 +57,7 @@ sear <- function(input, type = c("mrna", "mirna"), return_intersect = T) {
     dplyr::mutate(
       n_input   = length(input),
       n_geneset = length(members),
-      intersect = intersect(input, members),
+      intersect = list(intersect(input, members)),
       p_value   = phyper(
         length(intersect) - 1,
         n_geneset,
@@ -63,12 +71,12 @@ sear <- function(input, type = c("mrna", "mirna"), return_intersect = T) {
     dplyr::ungroup(.)
 
   # remove members
-  tbl <- tbl %>% dplyr::select(-members)
-
-  if(return_intersect)
-    return(tbl)
+  if(!return_members)
+    tbl <- tbl %>% dplyr::select(-members)
 
   # remove intersect
-  tbl <- tbl %>% dplyr::select(-intersect)
+  if(!return_intersect)
+    tbl <- tbl %>% dplyr::select(-intersect)
 
+  return(tbl)
 }
