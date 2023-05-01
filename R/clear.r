@@ -21,11 +21,12 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
 
   nodes <- leading_edge %>%
     tibble::rownames_to_column('rowid') %>%
-    dplyr::mutate(rowid = as.numeric(rowid) - 1,
-                  group = -log10(fdr + .Machine$double.xmin))
+    dplyr::mutate(
+      rowid = as.numeric(rowid) - 1,
+      group = -log10(fdr + .Machine$double.xmin)
+    )
 
-  links <- rebase_links(nodes) %>%
-    filter(jaccard >= cutoff)
+  links <- rebase_links(nodes) %>% filter(jaccard >= cutoff)
 
   if (trim) {
     selection <- c(links$source, links$target) %>%
@@ -61,11 +62,16 @@ rebase_links <- function(nodes) {
     as.data.frame(.) %>%
     tibble::as_tibble(.) %>%
     dplyr::rename(source = V1, target = V2) %>%
-    dplyr::mutate(jaccard  = unlist(purrr::map2(ref[as.character(source)],
-                                                ref[as.character(target)],
-                                                jaccard))) %>%
-    dplyr::mutate(source = match(source, nodes$rowid) - 1,
-                  target = match(target, nodes$rowid) - 1)
+    dplyr::mutate(
+      jaccard  = purrr::map2_dbl(
+        ref[as.character(source)],
+        ref[as.character(target)],
+        jaccard)
+    ) %>%
+    dplyr::mutate(
+      source = match(source, nodes$rowid) - 1,
+      target = match(target, nodes$rowid) - 1
+    )
 }
 
 create_colorscale <- function(nodes, palette) {
