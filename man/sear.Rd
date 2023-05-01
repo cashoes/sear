@@ -4,7 +4,7 @@
 \alias{sear}
 \title{Simple enrichment analysis in R using the MSigDB collections.}
 \usage{
-sear(input, type = c("mrna", "mirna"), return_members = F)
+sear(input, type = c("mrna", "mirna"), return_intersect = T)
 }
 \arguments{
 \item{input}{A character vector of HUGO gene naming commitee (HGNC) gene
