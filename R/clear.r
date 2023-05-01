@@ -13,9 +13,9 @@
 #' library(dplyr)
 #' data('collections')
 #' input <- collections$members_mrna %>% unlist() %>% unique() %>% sample(100)
-#' output <- sear(input, type = 'mrna', return_members = T) %>%
-#'   arrange(fdr) %>%
-#'   slice(1:100)
+#' output <- sear(input, type = 'mrna', return_members = TRUE) %>%
+#'   dplyr::arrange(fdr) %>%
+#'   dplyr::slice(1:100)
 #' clear(output, cutoff = 0.25, trim = TRUE)
 clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
 
