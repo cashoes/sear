@@ -20,7 +20,7 @@
 clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
 
   nodes <- leading_edge %>%
-    dplyr::add_rownames('rowid') %>%
+    tibble::rownames_to_column('rowid') %>%
     dplyr::mutate(rowid = as.numeric(rowid) - 1,
                   group = -log10(fdr + .Machine$double.xmin))
 
