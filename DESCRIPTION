@@ -13,7 +13,7 @@ Description: A package for simple enrichment analysis using: 1.MSigDB:
     differentiation, and lineage-specific transcription factors including ZBTB25 as
     a novel NF-AT repressor." Blood 115.26 (2010): 5376-5384.
 Depends:
-    R (>= 4.2.3)
+    R (>= 4.2)
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
