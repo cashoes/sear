@@ -17,9 +17,13 @@ Depends:
 License: GPL-3 | file LICENSE
 LazyData: true
 Imports:
-    tidyverse,
+    dplyr,
+    purrr,
+    magrittr,
     RColorBrewer,
-    networkD3
+    networkD3,
+    stats,
+    utils
 Suggests:
     testthat
 RoxygenNote: 7.2.3
