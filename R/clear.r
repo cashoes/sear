@@ -59,7 +59,7 @@ rebase_links <- function(nodes) {
   names(ref) <- nodes$rowid
   t(combn(as.numeric(names(ref)), 2)) %>%
     as.data.frame(.) %>%
-    dplyr::tbl_df(.) %>%
+    tibble::as_tibble(.) %>%
     dplyr::rename(source = V1, target = V2) %>%
     dplyr::mutate(jaccard  = unlist(purrr::map2(ref[as.character(source)],
                                                 ref[as.character(target)],
