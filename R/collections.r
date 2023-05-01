@@ -1,12 +1,11 @@
 #' Collection of 34,010 annotated gene sets
 #'
-#' A dataset containing >34,000 annotated gene sets from the following
-#' sources:
+#' A dataset containing >34,000 annotated gene sets from the following sources:
 #'
 #' \itemize{
-#'   \item MSigDB (33,591): Subramanian A, Tamayo P, Mootha VK, Mukherjee S, Ebert BL, Gillette MA, et al. Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles. Proceedings of the National Academy of Sciences of the United States of America. 2005;102: 15545 –15550. doi:10.1073/pnas.0506580102
-#'   \item Blood Transciptome Modules (BTM; 346): Chaussabel D, Baldwin N. Democratizing systems immunology with modular transcriptional repertoire analyses. Nat Rev Immunol. 2014;14: 271–280. doi:10.1038/nri3642
-#'   \item Tissue Enrichment (73): Benita Y, Cao Z, Giallourakis C, Li C, Gardet A, Xavier RJ. Gene enrichment profiles reveal T-cell development, differentiation, and lineage-specific transcription factors including ZBTB25 as a novel NF-AT repressor. Blood. 2010;115: 5376–5384. doi:10.1182/blood-2010-01-263855
+#'   \item MSigDB (33,591): Subramanian A, Tamayo P, Mootha VK, Mukherjee S, Ebert BL, Gillette MA, et al. Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles. Proceedings of the National Academy of Sciences of the United States of America. 2005;102: 15545-15550. doi:10.1073/pnas.0506580102
+#'   \item Blood Transciptome Modules (BTM; 346): Chaussabel D, Baldwin N. Democratizing systems immunology with modular transcriptional repertoire analyses. Nat Rev Immunol. 2014;14: 271-280. doi:10.1038/nri3642
+#'   \item Tissue Enrichment (73): Benita Y, Cao Z, Giallourakis C, Li C, Gardet A, Xavier RJ. Gene enrichment profiles reveal T-cell development, differentiation, and lineage-specific transcription factors including ZBTB25 as a novel NF-AT repressor. Blood. 2010;115: 5376-5384. doi:10.1182/blood-2010-01-263855
 #' }
 #'
 #' Gene set members were also mapped to equivalent validated targetting miRNAs
