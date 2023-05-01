@@ -21,6 +21,7 @@ LazyDataCompression: xz
 Imports:
     dplyr,
     purrr,
+    tibble,
     magrittr,
     RColorBrewer,
     networkD3,
