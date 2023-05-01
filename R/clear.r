@@ -26,7 +26,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
       group = -log10(fdr + .Machine$double.xmin)
     )
 
-  links <- rebase_links(nodes) %>% filter(jaccard >= cutoff)
+  links <- rebase_links(nodes) %>% dplyr::filter(jaccard > cutoff)
 
   if (trim) {
     selection <- c(links$source, links$target) %>%
@@ -35,7 +35,7 @@ clear <- function(leading_edge, cutoff = 0.25, trim = FALSE) {
       sort()
     nodes <- nodes %>%
       dplyr::slice(selection) %>%
-      dplyr::mutate(rowid = (0:(n() - 1)))
+      dplyr::mutate(rowid = (0:(dplyr::n() - 1)))
     links <- rebase_links(nodes) %>% dplyr::filter(jaccard >= cutoff)
   }
 
