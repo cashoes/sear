@@ -26,7 +26,7 @@
 #' output <- sear(input, type = 'mrna') %>%
 #'   arrange(fdr) %>%
 #'   slice(1:100)
-sear <- function(input, type = c("mrna", "mirna"), return_members = F) {
+sear <- function(input, type = c("mrna", "mirna"), return_intersect = T) {
   data("collections", envir = environment())
 
   type <- match.arg(type)
@@ -49,9 +49,9 @@ sear <- function(input, type = c("mrna", "mirna"), return_members = F) {
     dplyr::mutate(
       n_input   = length(input),
       n_geneset = length(members),
-      intersect = length(intersect(input, members)),
+      intersect = intersect(input, members),
       p_value   = phyper(
-        intersect - 1,
+        length(intersect) - 1,
         n_geneset,
         length(uni) - n_geneset,
         n_input, lower.tail = F
@@ -62,9 +62,13 @@ sear <- function(input, type = c("mrna", "mirna"), return_members = F) {
     dplyr::mutate(fdr = p.adjust(p_value, method = "BH")) %>%
     dplyr::ungroup(.)
 
-  if(return_members)
+  # remove members
+  tbl <- tbl %>% dplyr::select(-members)
+
+  if(return_intersect)
     return(tbl)
 
-  tbl %>%
-    dplyr::select(-members)
+  # remove intersect
+  tbl <- tbl %>% dplyr::select(-intersect)
+
 }
