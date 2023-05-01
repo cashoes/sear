@@ -15,7 +15,9 @@ Description: A package for simple enrichment analysis using: 1.MSigDB:
 Depends:
     R (>= 4.2.3)
 License: GPL-3 | file LICENSE
+Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 Imports:
     dplyr,
     purrr,
