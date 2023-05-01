@@ -4,7 +4,12 @@
 \alias{sear}
 \title{Simple enrichment analysis in R using the MSigDB collections.}
 \usage{
-sear(input, type = c("mrna", "mirna"), return_intersect = T)
+sear(
+  input,
+  type = c("mrna", "mirna"),
+  return_members = F,
+  return_intersect = T
+)
 }
 \arguments{
 \item{input}{A character vector of HUGO gene naming commitee (HGNC) gene
@@ -15,6 +20,9 @@ gene symbols, 'mirna' for miRNAs. The reference gene sets used differ for
 either types. See: Godard, P., and van Eyll, J. (2015). Pathway analysis
 from lists of microRNAs: common pitfalls and alternative strategy. Nucl.
 Acids Res. 43, 3490-3497.}
+
+\item{return_members}{A logical. Whether to include a list-column in the
+return object containing the gene set member genes.}
 
 \item{return_intersect}{A logical. Whether to include a list-column in the
 return object containing the genes found in common between the gene set and
